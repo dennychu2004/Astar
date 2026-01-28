@@ -45,6 +45,13 @@
 
 
   <style>
+	body 
+	{
+        overflow-y: scroll;
+        margin: 0;
+        padding: 0;
+    }
+  
     .status-badge { font-size: 0.85rem; }
     .group-row { background: rgba(0,0,0,.03); font-weight: 600; }
     button.secondary { background: transparent; color: var(--text); border: 1px solid var(--border); }
@@ -144,7 +151,11 @@
   </nav>
 
   <!-- 公會小夥伴 -->
-  <div id="homePage" class="container py-4">
+	<div id="homePage" class="container py-4">
+		<div class="d-flex align-items-center justify-content-between mb-3">
+			<h3 class="mb-0"><b>👩‍👩‍👧‍👦 公會小夥伴</b></h3>
+		</div>
+		
     <!-- 提示卡片 -->
     <div class="card shadow-sm mb-4">
       <div class="card-body">
@@ -237,7 +248,7 @@
 	<!-- Zakum 殘暴炎魔攻略（預設隱藏） -->
 	<div id="zakumPage" class="container py-4 d-none">
 	<div class="d-flex align-items-center justify-content-between mb-3">
-	  <h3 class="mb-0">🗿 殘暴炎魔攻略（Zakum Guide）</h3>
+	  <h5 class="mb-0">🗿 殘暴炎魔攻略（Zakum Guide）</h5>
 		  <div class="d-flex align-items-center gap-2">
 			<button id="backToList" class="btn btn-outline-secondary btn-sm">← 返回角色清單</button>
 			<button id="btnUncleGuide" class="btn btn-outline-primary btn-sm">📜 叔叔版一圖流攻略</button>
@@ -285,7 +296,7 @@
 	<!-- 放在 #zakumPage 區塊後面（同層級） -->
 	<div id="GuidePage" class="container py-4 d-none">
 		<div class="d-flex align-items-center justify-content-between mb-3">
-			<h3 class="mb-0">🚀 遊戲攻略（Game Guide）</h3>
+			<h3 class="mb-0"><b>🚀 遊戲攻略（Game Guide）<b></h3>
 			<div class="d-flex align-items-center gap-2">
 				<button id="backToList" class="btn btn-outline-secondary btn-sm">← 返回角色清單</button>
 				<!-- <button id="btnUncleGuide" class="btn btn-outline-primary btn-sm">📜 叔叔版一圖流攻略</button> -->
@@ -310,7 +321,7 @@
 			<!-- TAB1 打包區塊 start -->
 			<input id="tab1" type="radio" name="tab" checked="checked"/>
 			<label for="tab1" style="background-color:#fd7e14;">叔叔一圖流</label>
-			<div class="tab_content">
+			<div class="tab_content card border-0">
 				第 1 個頁籤內容區塊<br/>
 				第 1 個頁籤內容區塊<br/>
 			</div>
@@ -319,7 +330,7 @@
 			<!-- TAB2 打包區塊 start -->
 			<input id="tab2" type="button" name="tab"/>
 			<label for="tab2" ><a href="https://docs.google.com/spreadsheets/d/1lPS_dyOfFe04SbmavvqAZT6GVTOuN-F-qSXDhQlpfUY/edit?gid=0#gid=0" style="color:#FFF;text-decoration:none;" target="_blank" rel="noopener noreferrer">全職業攻略</a></label>
-			<div class="tab_content">
+			<div class="tab_content card border-0">
 				第 2 個頁籤內容區塊<br/>
 				第 2 個頁籤內容區塊<br/>
 			</div>
@@ -328,49 +339,51 @@
 			<!-- TAB3 打包區塊 start -->
 			<input id="tab3" type="button" name="tab"/>
 			<label for="tab3"><a href="https://docs.google.com/document/u/0/d/1fripMi-WrPOh9ZpdAfUlyiUZd42Btt_tIpNohXLLE3A/mobilebasic" style="color:#FFF;text-decoration:none;" target="_blank" rel="noopener noreferrer">全職業四轉技能</a></label>
-			<div class="tab_content">
+			<div class="tab_content card border-0">
 				第 3 個頁籤內容區塊<br/>
 				第 3 個頁籤內容區塊<br/>
 			</div>
 			<!-- TAB3 打包區塊 end -->
 			
 	
-			<!-- TAB4 打包區塊 start -->
+			<!-- TAB4 困難拉圖斯 start -->
 			<input id="tab4" type="radio" name="tab"/>
 			<label for="tab4" style="background-color:#6f42c1;">困難拉圖斯</label>
-			<div class="tab_content">
-				第 4 個頁籤內容區塊<br/>
-				第 4 個頁籤內容區塊<br/>
+			<div class="tab_content card border-0">
+				<div class="card-body">
+					<h4 class="card-title mb-2">⏰ 困難拉圖斯攻略（Hard Papulatus Guide）</h4>
+					<!-- Bootstrap 響應式比例盒，讓 iframe 自適應大小 -->
+					<div class="ratio ratio-16x9">
+					<iframe id="zakumDocFrame" src="https://docs.google.com/document/d/1UrV2RrEJwLZJ8X5t88GXRuxKbbxp9vq6W2Qeu1nqzV0/preview" title="Zakum Guide Doc" allowfullscreen style="border:0;"></iframe>
+					</div>
+					<small class="text-muted d-block mt-2">
+					若未顯示，請確認 Google 文件已「發佈到網路」或權限設定允許內嵌。
+					</small>
+				</div>
 			</div>
-			<!-- TAB4 打包區塊 end -->
+			<!-- TAB4 困難拉圖斯 end -->
 	
 			<!-- TAB5 殘暴炎魔 start -->
 			<input id="tab5" type="radio" name="tab"/>
 			<label for="tab5" style="background-color:#6f42c1;">殘暴炎魔</label>
-			<div class="tab_content">
-				第 5 個頁籤內容區塊<br/>
-				第 5 個頁籤內容區塊<br/>
-				<div class="card shadow-sm mb-3">
-					<div class="card-body">
-						<h5 class="card-title mb-2">官方攻略文件（內嵌）</h5>
-						<!-- Bootstrap 響應式比例盒，讓 iframe 自適應大小 -->
-						<div class="ratio ratio-16x9">
-						<iframe id="zakumDocFrame" src="" title="Zakum Guide Doc" allowfullscreen style="border:0;"></iframe>
-						</div>
-						<small class="text-muted d-block mt-2">
-						若未顯示，請確認 Google 文件已「發佈到網路」或權限設定允許內嵌。
-						</small>
+			<div class="tab_content card border-0">
+				<div class="card-body">
+					<h4 class="card-title mb-2">🗿 殘暴炎魔攻略（Zakum Guide）</h4>
+					<!-- Bootstrap 響應式比例盒，讓 iframe 自適應大小 -->
+					<div class="ratio ratio-16x9">
+					<iframe id="zakumDocFrame" src="https://docs.google.com/document/d/19iRUhl0Es049i5dgVkJlBAuDK3icESjuEqmAGj44cHs/preview" title="Zakum Guide Doc" allowfullscreen style="border:0;"></iframe>
 					</div>
+					<small class="text-muted d-block mt-2">
+					若未顯示，請確認 Google 文件已「發佈到網路」或權限設定允許內嵌。
+					</small>
 				</div>
-				
-				
 			</div>
 			<!-- TAB5 殘暴炎魔 end -->
 	
 			<!-- TAB6 打包區塊 start 198754 -->
 			<input id="tab6" type="button" name="tab"/>
 			<label for="tab6" style="background-color:#198754;"><a href="https://rvgin.github.io/tower-of-goddess/" style="color:#FFF;text-decoration:none;" target="_blank" rel="noopener noreferrer">女神400小工具</a></label>
-			<div class="tab_content">
+			<div class="tab_content card border-0">
 				第 6 個頁籤內容區塊<br/>
 				第 6 個頁籤內容區塊<br/>
 			</div>
@@ -379,7 +392,7 @@
 			<!-- TAB6 打包區塊 start -->
 			<input id="tab7" type="button" name="tab"/>
 			<label for="tab7" style="background-color:#198754;"><a href="https://philipc-1.github.io/MapleStory/HPsimulator.html" style="color:#FFF;text-decoration:none;" target="_blank" rel="noopener noreferrer">補品生存模擬器</a></label>
-			<div class="tab_content">
+			<div class="tab_content card border-0 shadow-sm mb-3">
 				第 7 個頁籤內容區塊<br/>
 				第 7 個頁籤內容區塊<br/>
 			</div>
@@ -408,39 +421,54 @@ const GAS_UPDATE_URL = 'https://script.google.com/macros/s/AKfycbwbEW15caNLWOUqm
 /* =========================
    夜間模式切換
 ========================= */
-$('#toggleTheme').on('click', function () {
+$('#toggleTheme').on('click', function () 
+{
   const html = document.documentElement;
   const isDark = html.getAttribute('data-bs-theme') === 'dark';
   html.setAttribute('data-bs-theme', isDark ? 'light' : 'dark');
   $(this).text(isDark ? '🌙 夜間模式' : '☀️ 日間模式');
 });
 
-/* =========================
-   殘暴炎魔攻略：單頁切換
-========================= */
-$('#Zakum').on('click', function () 
-{
-  $('#homePage').addClass('d-none');   // 隱藏清單
-  $('#zakumPage').removeClass('d-none'); // 顯示攻略
-});
-$(document).on('click', '#backToList', function () 
+
+/* ==== 返回角色清單：擴充既有處理，讓兩個攻略頁都能返回 ==== */
+// 將你原本的 backToList 事件「替換」成下面這段（或直接覆寫）
+$(document).off('click', '#backToList').on('click', '#backToList', function () 
 {
   $('#zakumPage').addClass('d-none');
+  $('#latusPage').addClass('d-none');
+  $('#GuidePage').addClass('d-none');   // 隱藏清單
   $('#homePage').removeClass('d-none');
 });
-// 只在第一次或每次切換時設定/重設 src（避免重複載入也可以加判斷）
-  const $frame = $('#zakumDocFrame');
-  if ($frame.attr('src') !== ZAKUM_DOC_EMBED) 
-  {
-    $frame.attr('src', ZAKUM_DOC_EMBED);
-  }
-  
-$('#Guide').on('click', function () {
+
+$('#Guide').on('click', function () 
+{
   $('#homePage').addClass('d-none');   // 隱藏清單
   $('#latusPage').addClass('d-none');   // 隱藏清單
   $('#zakumPage').addClass('d-none');   // 隱藏清單
+  $('#latusPage').addClass('d-none');   // 隱藏清單
   $('#GuidePage').removeClass('d-none'); // 顯示攻略
 });
+
+/* =========================
+   殘暴炎魔攻略：單頁切換
+========================= */
+//$('#Zakum').on('click', function () 
+//{
+//  $('#homePage').addClass('d-none');   // 隱藏清單
+//  $('#zakumPage').removeClass('d-none'); // 顯示攻略
+//});
+//$(document).on('click', '#backToList', function () 
+//{
+//  $('#zakumPage').addClass('d-none');
+//  $('#homePage').removeClass('d-none');
+//});
+//// 只在第一次或每次切換時設定/重設 src（避免重複載入也可以加判斷）
+//const $frame = $('#zakumDocFrame');
+//if ($frame.attr('src') !== ZAKUM_DOC_EMBED) 
+//{
+//  $frame.attr('src', ZAKUM_DOC_EMBED);
+//}
+  
 
 /* =========================
    公用：解析 URL 參數
@@ -1068,22 +1096,15 @@ $('#LatusGuide').on('click', function () {
 });
 
 /* ==== 拉圖斯攻略：子按鈕行為 ==== */
-$('#btnLatusNormal').on('click', function(){
-  const $f = $('#latusDocFrame');
-  if ($f.attr('src') !== LATUS_WIP_DATAURL) $f.attr('src', LATUS_WIP_DATAURL);
-});
-
-$('#btnLatusHard').on('click', function(){
-  const $f = $('#latusDocFrame');
-  if ($f.attr('src') !== LATUS_HARD_DOC_EMBED) $f.attr('src', LATUS_HARD_DOC_EMBED);
-});
-
-/* ==== 返回角色清單：擴充既有處理，讓兩個攻略頁都能返回 ==== */
-// 將你原本的 backToList 事件「替換」成下面這段（或直接覆寫）
-$(document).off('click', '#backToList').on('click', '#backToList', function () {
-  $('#zakumPage, #latusPage').addClass('d-none');
-  $('#homePage').removeClass('d-none');
-});
+//$('#btnLatusNormal').on('click', function(){
+//  const $f = $('#latusDocFrame');
+//  if ($f.attr('src') !== LATUS_WIP_DATAURL) $f.attr('src', LATUS_WIP_DATAURL);
+//});
+//
+//$('#btnLatusHard').on('click', function(){
+//  const $f = $('#latusDocFrame');
+//  if ($f.attr('src') !== LATUS_HARD_DOC_EMBED) $f.attr('src', LATUS_HARD_DOC_EMBED);
+//});
 
 
 // 叔叔版一圖流攻略（Google Sheets 嵌入）
