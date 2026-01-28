@@ -842,13 +842,14 @@ function renderTable_OneP(data) {
   //  return left * 10 + right;
   //}
 
-  const orderedKeys = Object.keys(groups).sort((a,b) => 
-  {
-    //const na = chineseNumToInt(a);
-    //const nb = chineseNumToInt(b);
-    if (!isNaN(na) && !isNaN(nb)) return na - nb;
-    return a.localeCompare(b, 'zh-Hant');
-  });
+  //const orderedKeys = Object.keys(groups).sort((a,b) => 
+  //{
+  //  //const na = chineseNumToInt(a);
+  //  //const nb = chineseNumToInt(b);
+  //  if (!isNaN(na) && !isNaN(nb)) return na - nb;
+  //  return a.localeCompare(b, 'zh-Hant');
+  //});
+  const orderedKeys = Object.keys(groups);
 
   let html = '';
   for (const k of orderedKeys) {
