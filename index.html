@@ -336,7 +336,7 @@
 						</thead>
 						<tbody id="tableBody">
 						<tr>
-							<td colspan="7" class="text-center text-muted">尚未讀取資料</td>
+							<td colspan="4" class="text-center text-muted">尚未讀取資料</td>
 						</tr>
 						</tbody>
 					</table>
@@ -722,7 +722,7 @@ function setTab(tab) {
    啟動流程：自動讀取
 ========================= */
 const DEFAULT_SHEET_URL = 'https://docs.google.com/spreadsheets/d/1-j04395CPwDlZnJ2vUt3k4wsT5rPHgQWmujSQCi76Fs/edit?gid=0#gid=0';
-function resolveSheetTarget() {
+function resolveSheetTarget(resolveURL) {
   const qp = getQueryParams();
   if (qp.sheetUrl) {
     const parsed = parseSheetFromUrl(qp.sheetUrl);
@@ -731,7 +731,7 @@ function resolveSheetTarget() {
   if (qp.sheetId) {
     return { sheetId: qp.sheetId, gid: qp.gid || '0' };
   }
-  const parsedDefault = parseSheetFromUrl(DEFAULT_SHEET_URL);
+  const parsedDefault = parseSheetFromUrl(resolveURL);
   return parsedDefault || { sheetId: '', gid: '0' };
 }
 function updateSourceBadge(sheetId, gid) {
@@ -741,8 +741,9 @@ function updateSourceBadge(sheetId, gid) {
   badge.removeClass('d-none');
 }
 
-$(function () {
-  const target = resolveSheetTarget();
+$(function () 
+{
+  const target = resolveSheetTarget(DEFAULT_SHEET_URL);
   if (!target.sheetId) {
     $('#msg').text('無法解析指定的 Google Sheet 連結或 sheetId');
     return;
@@ -760,7 +761,11 @@ $(function () {
       rowIndex: 0, __isNew: true
     }, () => { alert('已新增'); });
   });
-});
+  
+  
+  
+}
+);
 
 /* =========================
    編輯視窗（含營區下拉）— 保留你原本的寫回 GAS 做法
@@ -899,7 +904,7 @@ function openEditor(values, onSave) {
       }
 
       if (isNew) {
-        const t = resolveSheetTarget();
+        const t = resolveSheetTarget(resolveSheetTarget);
         loadFromSheet(t.sheetId, t.gid);
       } else {
         onSave?.(updated);
