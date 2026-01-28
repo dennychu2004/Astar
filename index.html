@@ -856,7 +856,7 @@ function renderTable_OneP(data) {
     const note = groupNotes[k] ? `　${groupNotes[k]}` : ''; // 有對照就加，沒有就空字串
     html += `
       <tr class="group-row">
-        <td colspan="7">所在營區：${k}${note}（${groups[k].length}）</td>
+        <td colspan="4">一圖流分類：${k}${note}（${groups[k].length}）</td>
       </tr>`;
     html += groups[k].map(r => `
       <tr>
@@ -865,12 +865,12 @@ function renderTable_OneP(data) {
         <td>${r.keyword ?? ''}</td>
         <td>${r.link ?? ''}</td>
         <td>
-          <button class="btn btn-outline-secondary btn-edit"
+          <label class="btn btn-outline-secondary btn-edit"
             data-row="${r.rowIndex || ''}"
             data-name="${r.category ?? ''}"
             data-code="${r.name ?? ''}"
             data-job="${r.keyword ?? ''}"
-            data-level="${r.link ?? ''}"
+            data-level="${r.link ?? ''}"</label>
         </td>
       </tr>`).join('');
   }
