@@ -864,14 +864,6 @@ function renderTable_OneP(data) {
         <td>${r.name ?? ''}</td>
         <td>${r.keyword ?? ''}</td>
         <td>${r.link ?? ''}</td>
-        <td>
-          <label class="btn btn-outline-secondary btn-edit"
-            data-row="${r.rowIndex || ''}"
-            data-name="${r.category ?? ''}"
-            data-code="${r.name ?? ''}"
-            data-job="${r.keyword ?? ''}"
-            data-level="${r.link ?? ''}"</label>
-        </td>
       </tr>`).join('');
   }
 
