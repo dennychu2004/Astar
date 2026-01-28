@@ -677,7 +677,6 @@ function renderTable(data) {
 
   $('#tableBody').html(html);
   
-  
   $('#tableBody_OneP').html(html);
 
   // 綁定「修改」
@@ -732,6 +731,62 @@ function setTab(tab) {
 	$('#tabTrainExt').on('click',  () => setTab('trainext'));
 
 
+function loadFromSheet_OneP(sheetId, gid = '0') {
+  $('#msg').text('');
+  $('#tableBody').html(`
+    <tr>
+      <td colspan="4" class="text-center text-muted">讀取中...</td>
+    </tr>
+  `);
+
+  const csvUrl = `https://docs.google.com/spreadsheets/d/${sheetId}/export?format=csv&gid=${gid}`;
+
+  Papa.parse(csvUrl, {
+    download: true,
+    skipEmptyLines: true,
+    complete: function (result) {
+      try {
+        if (!result.data || result.data.length < 2) {
+          $('#msg').text('沒有資料可顯示');
+          lastData = [];
+          renderTable(lastData);
+          return;
+        }
+
+        const rows = result.data.slice(1);
+        lastData = rows
+          .map((r, i) => ({
+            name:  r[1], // B
+            code:  r[2], // C（主鍵）
+            job:   r[3], // D
+            level: r[4], // E
+            rowIndex: i + 2
+          }))
+          .filter(r => r && r.name);
+
+        renderTable(lastData);
+      } catch (e) {
+        console.error(e);
+        $('#msg').text('解析資料時發生錯誤');
+        lastData = [];
+        renderTable(lastData);
+      }
+    },
+    error: function (err) {
+      console.error(err);
+      $('#msg').text('讀取失敗，請確認該 Google Sheet 已設為「知道連結的任何人可檢視」。');
+      lastData = [];
+      renderTable(lastData);
+    }
+  });
+}
+
+
+
+
+
+
+
 /* =========================
    啟動流程：自動讀取
 ========================= */
@@ -784,10 +839,10 @@ $(function ()
     return;
   }
   updateSourceBadge(target.sheetId, target.gid);
-  loadFromSheet(target.sheetId, target.gid);
+  loadFromSheet_OneP(target.sheetId, target.gid);
 
-  $('#reloadBtn').on('click', function () {
-    loadFromSheet(target.sheetId, target.gid);
+  $('#reloadBtn_OneP').on('click', function () {
+    loadFromSheet_OneP(target.sheetId, target.gid);
   });
 
   
