@@ -865,10 +865,10 @@ function renderTable_OneP(data) {
         <td>${r.keyword ?? ''}</td>
         //<td>${r.link ?? ''}</td>
 		<td>
-		${r.link ?? ''
-			<a href="${r.link}" target="_blank">
-			<img src="${r.link}" alt="預覽圖" style="width: 100px;">
-			</a>
+		${r.link ? `
+		<a href="${r.link}" target="_blank">
+		  <img src="${r.link}" alt="預覽圖" style="width: 100px;">
+		</a>
 	  ` : '無圖片'}
 		</td>
       </tr>`).join('');
