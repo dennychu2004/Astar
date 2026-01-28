@@ -677,7 +677,7 @@ function renderTable(data) {
 
   $('#tableBody').html(html);
   
-  $('#tableBody_OneP').html(html);
+  //$('#tableBody_OneP').html(html);
 
   // 綁定「修改」
   $('#tableBody').off('click', '.btn-edit').on('click', '.btn-edit', function(){
@@ -860,26 +860,22 @@ function renderTable_OneP(data) {
       </tr>`;
     html += groups[k].map(r => `
       <tr>
+        <td>${r.category ?? ''}</td>
         <td>${r.name ?? ''}</td>
-        <td>${r.code ?? ''}</td>
-        <td>${r.job ?? ''}</td>
-        <td>${r.level ?? ''}</td>
-        <td>${r.attack ?? ''}</td>
-        <td>${r.camp ?? ''}</td>
+        <td>${r.keyword ?? ''}</td>
+        <td>${r.link ?? ''}</td>
         <td>
           <button class="btn btn-outline-secondary btn-edit"
             data-row="${r.rowIndex || ''}"
-            data-name="${r.name ?? ''}"
-            data-code="${r.code ?? ''}"
-            data-job="${r.job ?? ''}"
-            data-level="${r.level ?? ''}"
-            data-attack="${r.attack ?? ''}"
-            data-camp="${r.camp ?? ''}">修改</button>
+            data-name="${r.category ?? ''}"
+            data-code="${r.name ?? ''}"
+            data-job="${r.keyword ?? ''}"
+            data-level="${r.link ?? ''}"
         </td>
       </tr>`).join('');
   }
 
-  $('#tableBody').html(html);
+  //$('#tableBody').html(html);
   
   $('#tableBody_OneP').html(html);
 
