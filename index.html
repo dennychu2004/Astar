@@ -749,7 +749,7 @@ function loadFromSheet_OneP(sheetId, gid = '0') {
         if (!result.data || result.data.length < 2) {
           $('#msg').text('沒有資料可顯示');
           lastData = [];
-          renderTable(lastData);
+          renderTable_OneP(lastData);
           return;
         }
 
@@ -764,26 +764,151 @@ function loadFromSheet_OneP(sheetId, gid = '0') {
           }))
           .filter(r => r && r.name);
 
-        renderTable(lastData);
+        renderTable_OneP(lastData);
       } catch (e) {
         console.error(e);
         $('#msg').text('解析資料時發生錯誤');
         lastData = [];
-        renderTable(lastData);
+        renderTable_OneP(lastData);
       }
     },
     error: function (err) {
       console.error(err);
       $('#msg').text('讀取失敗，請確認該 Google Sheet 已設為「知道連結的任何人可檢視」。');
       lastData = [];
-      renderTable(lastData);
+      renderTable_OneP(lastData);
     }
   });
 }
 
 
 
+function renderTable_OneP(data) {
+  // 依目前分頁過濾營區
+  const zhNums = '一二三四五六七八九十';
+  const reLatus = new RegExp(`^普拉[${zhNums}]營$`);
+  const reLatushard = new RegExp(`^困拉[${zhNums}]營$`);
+  const reZakum = new RegExp(`^炎魔[${zhNums}]營$`);
 
+  const groupNotes = {
+    '普拉一營': 'BOO攻略',
+    '普拉二營': '遊戲知識',
+  };
+
+  //const filtered = (data || []).filter(r => {
+  //  const camp = (r.camp || '').trim();
+  //  if (currentTab === 'latus')   return reLatus.test(camp);
+  // if (currentTab === 'latushard')  return reLatushard.test(camp);
+  //  if (currentTab === 'zakum')   return reZakum.test(camp);
+  //  if (currentTab === 'trainext')return (camp === '訓練營' || camp === '外援大大');
+  //  return true;
+  //});
+  //
+  //// ...（你原本 renderTable 後續的分組/排序/輸出保持不變）
+
+
+  if (!filtered.length) {
+    $('#tableBody_OneP').html(`
+      <tr>
+        <td colspan="4" class="text-center text-muted">此分頁下沒有符合的資料</td>
+      </tr>
+    `);
+    return;
+  }
+  return;
+  // 依營區分組
+  const groups = {};
+  for (const r of filtered) {
+    const key = (r.camp || '未填寫').toString().trim();
+    if (!groups[key]) groups[key] = [];
+    groups[key].push(r);
+  }
+
+  // 依「一二三…十」排序
+  const mapCN = { '零':0,'〇':0,'一':1,'二':2,'兩':2,'三':3,'四':4,'五':5,'六':6,'七':7,'八':8,'九':9,'十':10 };
+  function chineseNumToInt(txt) {
+    if (!txt) return NaN;
+    const m = txt.match(/[零〇一二兩三四五六七八九十]/g);
+    if (!m) return NaN;
+    const s = m.join('');
+    if (s === '十') return 10;
+    const tenIdx = s.indexOf('十');
+    if (tenIdx === -1) return mapCN[s] ?? NaN;
+    const left = tenIdx === 0 ? 1 : (mapCN[s[0]] ?? 0);
+    const right = tenIdx === s.length - 1 ? 0 : (mapCN[s[tenIdx+1]] ?? 0);
+    return left * 10 + right;
+  }
+
+  const orderedKeys = Object.keys(groups).sort((a,b) => {
+    const na = chineseNumToInt(a);
+    const nb = chineseNumToInt(b);
+    if (!isNaN(na) && !isNaN(nb)) return na - nb;
+    return a.localeCompare(b, 'zh-Hant');
+  });
+
+  let html = '';
+  for (const k of orderedKeys) {
+    const note = groupNotes[k] ? `　${groupNotes[k]}` : ''; // 有對照就加，沒有就空字串
+    html += `
+      <tr class="group-row">
+        <td colspan="7">所在營區：${k}${note}（${groups[k].length}）</td>
+      </tr>`;
+    html += groups[k].map(r => `
+      <tr>
+        <td>${r.name ?? ''}</td>
+        <td>${r.code ?? ''}</td>
+        <td>${r.job ?? ''}</td>
+        <td>${r.level ?? ''}</td>
+        <td>${r.attack ?? ''}</td>
+        <td>${r.camp ?? ''}</td>
+        <td>
+          <button class="btn btn-outline-secondary btn-edit"
+            data-row="${r.rowIndex || ''}"
+            data-name="${r.name ?? ''}"
+            data-code="${r.code ?? ''}"
+            data-job="${r.job ?? ''}"
+            data-level="${r.level ?? ''}"
+            data-attack="${r.attack ?? ''}"
+            data-camp="${r.camp ?? ''}">修改</button>
+        </td>
+      </tr>`).join('');
+  }
+
+  $('#tableBody').html(html);
+  
+  $('#tableBody_OneP').html(html);
+
+  // 綁定「修改」
+  $('#tableBody').off('click', '.btn-edit').on('click', '.btn-edit', function(){
+    const $btn = $(this);
+    openEditor({
+      name:  $btn.data('name'),
+      code:  $btn.data('code'),
+      job:   $btn.data('job'),
+      level: $btn.data('level'),
+      attack:$btn.data('attack'),
+      camp:  $btn.data('camp'),
+      rowIndex: Number($btn.data('row') || 0)
+    }, (updated) => {
+      // 更新前端當列
+      const tr = $btn.closest('tr')[0];
+      const tds = tr.querySelectorAll('td');
+      tds[0].textContent = updated.name;
+      tds[1].textContent = updated.code;
+      tds[2].textContent = updated.job;
+      tds[3].textContent = updated.level;
+      tds[4].textContent = updated.attack;
+      tds[5].textContent = updated.camp;
+
+      $btn.data('name',  updated.name);
+      $btn.data('code',  updated.code);
+      $btn.data('job',   updated.job);
+      $btn.data('level', updated.level);
+      $btn.data('attack',updated.attack);
+      $btn.data('camp',  updated.camp);
+    });
+  });
+}
 
 
 
@@ -833,16 +958,16 @@ $(function ()
   });
   
   
-  const target_Picture = resolveSheetTarget(OnePicture_URL);
-  if (!target.sheetId) {
+  const target_OneP = resolveSheetTarget(OnePicture_URL);
+  if (!target_OneP.sheetId) {
     $('#msg').text('無法解析指定的 Google Sheet 連結或 sheetId');
     return;
   }
-  updateSourceBadge(target.sheetId, target.gid);
-  loadFromSheet_OneP(target.sheetId, target.gid);
+  updateSourceBadge(target_OneP.sheetId, target_OneP.gid);
+  loadFromSheet_OneP(target_OneP.sheetId, target_OneP.gid);
 
   $('#reloadBtn_OneP').on('click', function () {
-    loadFromSheet_OneP(target.sheetId, target.gid);
+    loadFromSheet_OneP(target_OneP.sheetId, target_OneP.gid);
   });
 
   
