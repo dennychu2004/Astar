@@ -795,14 +795,16 @@ function renderTable_OneP(data) {
     '普拉二營': '遊戲知識',
   };
 
-  const filtered = (data || []).filter(r => {
-    const camp = (r.camp || '').trim();
-    if (currentTab === 'latus')   return reLatus.test(camp);
-    if (currentTab === 'latushard')  return reLatushard.test(camp);
-    if (currentTab === 'zakum')   return reZakum.test(camp);
-    if (currentTab === 'trainext')return (camp === '訓練營' || camp === '外援大大');
-    return true;
-  });
+  const filtered = data;
+  
+  //(data || []).filter(r => {
+  //  const camp = (r.camp || '').trim();
+  //  if (currentTab === 'latus')   return reLatus.test(camp);
+  //  if (currentTab === 'latushard')  return reLatushard.test(camp);
+  //  if (currentTab === 'zakum')   return reZakum.test(camp);
+  //  if (currentTab === 'trainext')return (camp === '訓練營' || camp === '外援大大');
+  //  return true;
+  //});
   
   // ...（你原本 renderTable 後續的分組/排序/輸出保持不變）
 
