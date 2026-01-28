@@ -756,11 +756,11 @@ function loadFromSheet_OneP(sheetId, gid = '0') {
         const rows = result.data.slice(1);
         lastData = rows
           .map((r, i) => ({
-            category:  r[1], // B
-            name:  r[2], // C（主鍵）
-            keyword:   r[3], // D
-            link: r[4], // E
-            rowIndex: i + 2
+            category:  	r[0], // A
+            name:  		r[1], // B（主鍵）
+            keyword:	r[2], // C
+            link: 		r[3], // D
+            rowIndex: 	i + 2
           }))
           .filter(r => r && r.name);
 
