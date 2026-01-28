@@ -817,13 +817,13 @@ function renderTable_OneP(data) {
   //}
   //return;
   
-  //// 依營區分組
-  //const groups = {};
-  //for (const r of filtered) {
-  //  const key = (r.camp || '未填寫').toString().trim();
-  //  if (!groups[key]) groups[key] = [];
-  //  groups[key].push(r);
-  //}
+  // 依營區分組
+  const groups = {};
+  for (const r of filtered) {
+    const key = (r.category || '未填寫').toString().trim();
+    if (!groups[key]) groups[key] = [];
+    groups[key].push(r);
+  }
 
   //// 依「一二三…十」排序
   //const mapCN = { '零':0,'〇':0,'一':1,'二':2,'兩':2,'三':3,'四':4,'五':5,'六':6,'七':7,'八':8,'九':9,'十':10 };
@@ -840,9 +840,10 @@ function renderTable_OneP(data) {
   //  return left * 10 + right;
   //}
 
-  const orderedKeys = Object.keys(groups).sort((a,b) => {
-    const na = chineseNumToInt(a);
-    const nb = chineseNumToInt(b);
+  const orderedKeys = Object.keys(groups).sort((a,b) => 
+  {
+    //const na = chineseNumToInt(a);
+    //const nb = chineseNumToInt(b);
     if (!isNaN(na) && !isNaN(nb)) return na - nb;
     return a.localeCompare(b, 'zh-Hant');
   });
