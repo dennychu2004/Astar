@@ -756,10 +756,10 @@ function loadFromSheet_OneP(sheetId, gid = '0') {
         const rows = result.data.slice(1);
         lastData = rows
           .map((r, i) => ({
-            name:  r[1], // B
-            code:  r[2], // C（主鍵）
-            job:   r[3], // D
-            level: r[4], // E
+            category:  r[1], // B
+            name:  r[2], // C（主鍵）
+            keyword:   r[3], // D
+            link: r[4], // E
             rowIndex: i + 2
           }))
           .filter(r => r && r.name);
@@ -807,37 +807,38 @@ function renderTable_OneP(data) {
   // ...（你原本 renderTable 後續的分組/排序/輸出保持不變）
 
 
-  if (!filtered.length) {
-    $('#tableBody_OneP').html(`
-      <tr>
-        <td colspan="4" class="text-center text-muted">此分頁下沒有符合的資料</td>
-      </tr>
-    `);
-    return;
-  }
-  return;
-  // 依營區分組
-  const groups = {};
-  for (const r of filtered) {
-    const key = (r.camp || '未填寫').toString().trim();
-    if (!groups[key]) groups[key] = [];
-    groups[key].push(r);
-  }
+  //if (!filtered.length) {
+  //  $('#tableBody_OneP').html(`
+  //    <tr>
+  //      <td colspan="4" class="text-center text-muted">此分頁下沒有符合的資料</td>
+  //    </tr>
+  //  `);
+  //  return;
+  //}
+  //return;
+  
+  //// 依營區分組
+  //const groups = {};
+  //for (const r of filtered) {
+  //  const key = (r.camp || '未填寫').toString().trim();
+  //  if (!groups[key]) groups[key] = [];
+  //  groups[key].push(r);
+  //}
 
-  // 依「一二三…十」排序
-  const mapCN = { '零':0,'〇':0,'一':1,'二':2,'兩':2,'三':3,'四':4,'五':5,'六':6,'七':7,'八':8,'九':9,'十':10 };
-  function chineseNumToInt(txt) {
-    if (!txt) return NaN;
-    const m = txt.match(/[零〇一二兩三四五六七八九十]/g);
-    if (!m) return NaN;
-    const s = m.join('');
-    if (s === '十') return 10;
-    const tenIdx = s.indexOf('十');
-    if (tenIdx === -1) return mapCN[s] ?? NaN;
-    const left = tenIdx === 0 ? 1 : (mapCN[s[0]] ?? 0);
-    const right = tenIdx === s.length - 1 ? 0 : (mapCN[s[tenIdx+1]] ?? 0);
-    return left * 10 + right;
-  }
+  //// 依「一二三…十」排序
+  //const mapCN = { '零':0,'〇':0,'一':1,'二':2,'兩':2,'三':3,'四':4,'五':5,'六':6,'七':7,'八':8,'九':9,'十':10 };
+  //function chineseNumToInt(txt) {
+  //  if (!txt) return NaN;
+  //  const m = txt.match(/[零〇一二兩三四五六七八九十]/g);
+  //  if (!m) return NaN;
+  //  const s = m.join('');
+  //  if (s === '十') return 10;
+  //  const tenIdx = s.indexOf('十');
+  //  if (tenIdx === -1) return mapCN[s] ?? NaN;
+  //  const left = tenIdx === 0 ? 1 : (mapCN[s[0]] ?? 0);
+  //  const right = tenIdx === s.length - 1 ? 0 : (mapCN[s[tenIdx+1]] ?? 0);
+  //  return left * 10 + right;
+  //}
 
   const orderedKeys = Object.keys(groups).sort((a,b) => {
     const na = chineseNumToInt(a);
