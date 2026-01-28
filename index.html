@@ -159,7 +159,7 @@
     <!-- 提示卡片 -->
     <div class="card shadow-sm mb-4">
       <div class="card-body">
-        <h5 class="card-title mb-2">資料來源</h5>
+        <h4 class="card-title mb-2">資料來源</h4>
         <p class="mb-0 text-muted">請各位檢視一下自己的資料是否須更新，若要更新請點擊【修改】按鈕進行更新。若遇無法更新情形請進以下網址進入Excel表找到自己的欄位更新資料 　～感恩的心～</p>
         <small class="text-muted">
           <a href="https://docs.google.com/spreadsheets/d/1-j04395CPwDlZnJ2vUt3k4wsT5rPHgQWmujSQCi76Fs/edit?gid=0#gid=0" target="_blank" rel="noopener noreferrer">
@@ -173,7 +173,7 @@
     <div class="card shadow-sm">
       <div class="card-body">
         <div class="d-flex justify-content-between align-items-center mb-3">
-          <h5 class="card-title mb-0">角色清單</h5>
+          <h4 class="card-title mb-0">角色清單</h4>
           <div class="d-flex align-items-center gap-2">
             <button id="addBtn" class="btn btn-primary btn-sm">新增角色</button>
 			<button id="btnJobStats" class="btn btn-outline-primary btn-sm">📊 公會職業分佈統計</button>
@@ -321,9 +321,20 @@
 			<!-- TAB1 打包區塊 start -->
 			<input id="tab1" type="radio" name="tab" checked="checked"/>
 			<label for="tab1" style="background-color:#fd7e14;">叔叔一圖流</label>
+			
+			
 			<div class="tab_content card border-0">
-				第 1 個頁籤內容區塊<br/>
-				第 1 個頁籤內容區塊<br/>
+				<div class="card-body">
+				<div class="d-flex justify-content-between align-items-center mb-3">
+					<h4 class="card-title mb-2">叔叔一圖流</h4>
+					<div class="d-flex align-items-center gap-2">
+						<button id="reloadBtn_OneP" class="btn btn-outline-secondary btn-sm">重新整理</button>
+					</div>
+				</div>
+				</div>
+				
+				
+				
 				<div class="table-responsive">
 					<table class="table table-striped table-hover align-middle">
 						<thead class="table-secondary">
@@ -334,7 +345,7 @@
 							<th>圖片</th>
 						</tr>
 						</thead>
-						<tbody id="tableBody">
+						<tbody id="tableBody_OneP">
 						<tr>
 							<td colspan="4" class="text-center text-muted">尚未讀取資料</td>
 						</tr>
@@ -665,6 +676,9 @@ function renderTable(data) {
   }
 
   $('#tableBody').html(html);
+  
+  
+  $('#tableBody_OneP').html(html);
 
   // 綁定「修改」
   $('#tableBody').off('click', '.btn-edit').on('click', '.btn-edit', function(){
@@ -722,6 +736,7 @@ function setTab(tab) {
    啟動流程：自動讀取
 ========================= */
 const DEFAULT_SHEET_URL = 'https://docs.google.com/spreadsheets/d/1-j04395CPwDlZnJ2vUt3k4wsT5rPHgQWmujSQCi76Fs/edit?gid=0#gid=0';
+const OnePicture_URL = 'https://docs.google.com/spreadsheets/d/1ZFHkpsHKc0LWQDNPrP8Y5NS27aee0mOniK2uB8C2zD4/edit?gid=0#gid=0';
 function resolveSheetTarget(resolveURL) {
   const qp = getQueryParams();
   if (qp.sheetUrl) {
@@ -763,6 +778,18 @@ $(function ()
   });
   
   
+  const target_Picture = resolveSheetTarget(OnePicture_URL);
+  if (!target.sheetId) {
+    $('#msg').text('無法解析指定的 Google Sheet 連結或 sheetId');
+    return;
+  }
+  updateSourceBadge(target.sheetId, target.gid);
+  loadFromSheet(target.sheetId, target.gid);
+
+  $('#reloadBtn').on('click', function () {
+    loadFromSheet(target.sheetId, target.gid);
+  });
+
   
 }
 );
