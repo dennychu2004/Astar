@@ -110,7 +110,7 @@
 	.tab_css{display:flex;flex-wrap:wrap;justify-content:flex-start;}
 	.tab_css input{display:none}
 	.tab_css label{margin: 0 5px 5px 0; padding: 10px 16px; cursor: pointer; border-radius: 5px; background: #0d6efd; color: #fff; opacity: 0.638;}
-	.tab_content{order:1; display: none; width:100%; border-bottom: 3px solid #ddd; line-height: 1.6; font-size: 0.85rem; padding: 15px; border: 1px solid #ddd; border-radius: 5px;}
+	.tab_content{order:1; display: none; width:100%; border-bottom: 3px solid #ddd; line-height: 1.6; font-size: 0.85rem; padding: 0px; margin-top: 8px; border: 1px solid #ddd; border-radius: 5px;}
 	.tab_css input:checked + label, .tab_css label:hover{opacity: 1; font-weight:bold;}
 	.tab_css input:checked + label + .tab_content{display: initial;}
 	
@@ -175,7 +175,7 @@
     <!-- 提示卡片 -->
     <div class="card shadow-sm mb-4">
       <div class="card-body">
-		<div class="d-flex justify-content-between align-items-center mb-0" style="padding-left:32px;">
+		<div class="d-flex justify-content-between align-items-center mb-0">
 			<h4 class="card-title mb-2">➡️ 資料來源</h4>
 		</div>
         <p class="mb-0 text-muted">請各位檢視一下自己的資料是否須更新，若要更新請點擊【修改】按鈕進行更新。若遇無法更新情形請進以下網址進入Excel表找到自己的欄位更新資料 　～感恩的心～</p>
@@ -190,7 +190,7 @@
 
     <div class="card shadow-sm">
 		<div class="card-body">
-			<div class="d-flex justify-content-between align-items-center mb-2" style="padding-left:32px;">
+			<div class="d-flex justify-content-between align-items-center mb-2">
 				<h4 class="card-title mb-2">🏋️ 角色清單</h4>
 				<div class="d-flex align-items-center gap-2">
 					<button id="addBtn" class="btn btn-primary btn-sm">新增角色</button>
@@ -342,12 +342,10 @@
 			
 			
 			<div class="tab_content card border-0">
-				<div class="card-body">
-					<div class="d-flex justify-content-between align-items-center mb-2">
-						<h4 class="card-title mb-2">🌟 叔叔一圖流</h4>
-						<div class="d-flex align-items-center gap-2">
-							<button id="reloadBtn_OneP" class="btn btn-outline-secondary btn-sm">重新整理</button>
-						</div>
+				<div class="d-flex justify-content-between align-items-center mb-2">
+					<h4 class="card-title mb-2">🌟 叔叔一圖流</h4>
+					<div class="d-flex align-items-center gap-2">
+						<button id="reloadBtn_OneP" class="btn btn-outline-secondary btn-sm">重新整理</button>
 					</div>
 				</div>
 				
@@ -394,16 +392,14 @@
 			<input id="tab4" type="radio" name="tab"/>
 			<label for="tab4" style="background-color:#6f42c1;">困難拉圖斯</label>
 			<div class="tab_content card border-0">
-				<div class="card-body">
-					<h4 class="card-title mb-2">⏰ 困難拉圖斯攻略（Hard Papulatus Guide）</h4>
-					<!-- Bootstrap 響應式比例盒，讓 iframe 自適應大小 -->
-					<div class="ratio ratio-16x9">
-					<iframe id="zakumDocFrame" src="https://docs.google.com/document/d/1UrV2RrEJwLZJ8X5t88GXRuxKbbxp9vq6W2Qeu1nqzV0/preview" title="Zakum Guide Doc" allowfullscreen style="border:0;"></iframe>
-					</div>
-					<small class="text-muted d-block mt-2">
-					若未顯示，請確認 Google 文件已「發佈到網路」或權限設定允許內嵌。
-					</small>
+				<h4 class="card-title mb-2">⏰ 困難拉圖斯攻略（Hard Papulatus Guide）</h4>
+				<!-- Bootstrap 響應式比例盒，讓 iframe 自適應大小 -->
+				<div class="ratio ratio-16x9">
+				<iframe id="zakumDocFrame" src="https://docs.google.com/document/d/1UrV2RrEJwLZJ8X5t88GXRuxKbbxp9vq6W2Qeu1nqzV0/preview" title="Zakum Guide Doc" allowfullscreen style="border:0;"></iframe>
 				</div>
+				<small class="text-muted d-block mt-2">
+				若未顯示，請確認 Google 文件已「發佈到網路」或權限設定允許內嵌。
+				</small>
 			</div>
 			<!-- TAB4 困難拉圖斯 end -->
 	
@@ -411,16 +407,14 @@
 			<input id="tab5" type="radio" name="tab"/>
 			<label for="tab5" style="background-color:#6f42c1;">殘暴炎魔</label>
 			<div class="tab_content card border-0">
-				<div class="card-body">
-					<h4 class="card-title mb-2">🗿 殘暴炎魔攻略（Zakum Guide）</h4>
-					<!-- Bootstrap 響應式比例盒，讓 iframe 自適應大小 -->
-					<div class="ratio ratio-16x9">
-					<iframe id="zakumDocFrame" src="https://docs.google.com/document/d/19iRUhl0Es049i5dgVkJlBAuDK3icESjuEqmAGj44cHs/preview" title="Zakum Guide Doc" allowfullscreen style="border:0;"></iframe>
-					</div>
-					<small class="text-muted d-block mt-2">
-					若未顯示，請確認 Google 文件已「發佈到網路」或權限設定允許內嵌。
-					</small>
+				<h4 class="card-title mb-2">🗿 殘暴炎魔攻略（Zakum Guide）</h4>
+				<!-- Bootstrap 響應式比例盒，讓 iframe 自適應大小 -->
+				<div class="ratio ratio-16x9">
+				<iframe id="zakumDocFrame" src="https://docs.google.com/document/d/19iRUhl0Es049i5dgVkJlBAuDK3icESjuEqmAGj44cHs/preview" title="Zakum Guide Doc" allowfullscreen style="border:0;"></iframe>
 				</div>
+				<small class="text-muted d-block mt-2">
+				若未顯示，請確認 Google 文件已「發佈到網路」或權限設定允許內嵌。
+				</small>
 			</div>
 			<!-- TAB5 殘暴炎魔 end -->
 	
@@ -878,7 +872,7 @@ function renderTable_OneP(data) {
 		<td>
 		${r.link ? `
 		<a href="https://drive.google.com/file/d/${r.link}/" target="_blank">
-		  <img src="https://lh3.googleusercontent.com/d/${r.link}=h200?authuser=0" alt=r.name title=r.name height="200px;">
+		  <img src="https://lh3.googleusercontent.com/d/${r.link}=h400?authuser=0" alt=r.name title=r.name height="200px;">
 		</a>
 	    ` : '無圖片'}
 		</td>
