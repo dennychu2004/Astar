@@ -169,6 +169,11 @@
         <div id="msg" class="text-danger mt-2"></div>
       </div>
     </div>
+	
+	<a href="https://drive.google.com/file/d/1kzaefzThSB6If3ICF7KDY7bHpaeu3DZy/view?usp=drive_link" target="_blank">
+		  <img src="${item.img}""https://lh3.googleusercontent.com/d/1kzaefzThSB6If3ICF7KDY7bHpaeu3DZy=h200?authuser=0/">
+		</a>
+	<!-- `https://docs.google.com/spreadsheets/d/${sheetId}/export?format=csv&gid=${gid}`; -->
 
     <div class="card shadow-sm">
       <div class="card-body">
@@ -867,7 +872,7 @@ function renderTable_OneP(data) {
 		<td>
 		${r.link ? `
 		<a href="${r.link}" target="_blank">
-		  <img src="${r.link}" alt="預覽圖" style="width: 100px;">
+		  <img src="https://lh3.googleusercontent.com/d/${r.link}=h200?authuser=0" alt=r.name style="width: 100px;">
 		</a>
 	  ` : '無圖片'}
 		</td>
