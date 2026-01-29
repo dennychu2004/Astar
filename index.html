@@ -114,10 +114,26 @@
 	.tab_css input:checked + label, .tab_css label:hover{opacity: 1; font-weight:bold;}
 	.tab_css input:checked + label + .tab_content{display: initial;}
 	
-	.tab_css_Blue label{margin: 0 5px 5px 0; padding: 10px 16px; cursor: pointer; border-radius: 5px; background: #0d6efd; color: #fff; opacity: 0.1;}
-	.tab_css_Orange label{margin: 0 5px 5px 0; padding: 10px 16px; cursor: pointer; border-radius: 5px; background: #fd7e14; color: #fff; opacity: 0.1;}
-	
 	.title{font-weight:bold; font-size:1.0rem;}
+	
+	<!-- /* 針對標籤內的內容進行重製 */ -->
+	.reset-content 
+	{
+		<!-- /* all: revert; */ -->   
+		display: table-cell;  
+		line-height: 1.5; 
+		font-size: 1rem;    
+		padding: 0.5;           
+		border: none;         
+	}
+
+	<!-- /* 如果是針對整個表格，可以更簡單 */ -->
+	.clean-table 
+	{
+		all: revert;
+		width: 100%;
+		border-collapse: collapse;
+	}
 
   </style>
 </head>
@@ -169,11 +185,6 @@
         <div id="msg" class="text-danger mt-2"></div>
       </div>
     </div>
-	
-	<a href="https://drive.google.com/file/d/1kzaefzThSB6If3ICF7KDY7bHpaeu3DZy/view?usp=drive_link" target="_blank">
-		  <img src="${item.img}""https://lh3.googleusercontent.com/d/1kzaefzThSB6If3ICF7KDY7bHpaeu3DZy=h200?authuser=0/">
-		</a>
-	<!-- `https://docs.google.com/spreadsheets/d/${sheetId}/export?format=csv&gid=${gid}`; -->
 
     <div class="card shadow-sm">
       <div class="card-body">
@@ -205,7 +216,7 @@
 
 
         <div class="table-responsive">
-          <table class="table table-striped table-hover align-middle">
+          <table class="table table-striped table-hover align-middle reset-content">
             <thead class="table-secondary">
               <tr>
                 <th>角色名稱</th>
@@ -330,24 +341,22 @@
 			
 			<div class="tab_content card border-0">
 				<div class="card-body">
-				<div class="d-flex justify-content-between align-items-center mb-3">
-					<h4 class="card-title mb-2">叔叔一圖流</h4>
-					<div class="d-flex align-items-center gap-2">
-						<button id="reloadBtn_OneP" class="btn btn-outline-secondary btn-sm">重新整理</button>
+					<div class="d-flex justify-content-between align-items-center mb-3">
+						<h4 class="card-title mb-2">叔叔一圖流</h4>
+						<div class="d-flex align-items-center gap-2">
+							<button id="reloadBtn_OneP" class="btn btn-outline-secondary btn-sm">重新整理</button>
+						</div>
 					</div>
 				</div>
-				</div>
-				
-				
 				
 				<div class="table-responsive">
-					<table class="table table-striped table-hover align-middle">
+					<table class="table table-striped table-hover align-middle reset-content">
 						<thead class="table-secondary">
 						<tr>
-							<th>分類</th>
-							<th>名稱</th>
-							<th>關鍵字</th>
-							<th>圖片</th>
+							<th style="width: 20%;">分類</th>
+							<th style="width: 20%;">名稱</th>
+							<th style="width: 30%;">關鍵字</th>
+							<th style="width: 30%;">圖片</th>
 						</tr>
 						</thead>
 						<tbody id="tableBody_OneP">
@@ -681,8 +690,6 @@ function renderTable(data) {
   }
 
   $('#tableBody').html(html);
-  
-  //$('#tableBody_OneP').html(html);
 
   // 綁定「修改」
   $('#tableBody').off('click', '.btn-edit').on('click', '.btn-edit', function(){
@@ -801,7 +808,6 @@ function renderTable_OneP(data) {
   };
 
   const filtered = data;
-  
   //(data || []).filter(r => {
   //  const camp = (r.camp || '').trim();
   //  if (currentTab === 'latus')   return reLatus.test(camp);
@@ -814,15 +820,15 @@ function renderTable_OneP(data) {
   // ...（你原本 renderTable 後續的分組/排序/輸出保持不變）
 
 
-  //if (!filtered.length) {
-  //  $('#tableBody_OneP').html(`
-  //    <tr>
-  //      <td colspan="4" class="text-center text-muted">此分頁下沒有符合的資料</td>
-  //    </tr>
-  //  `);
-  //  return;
-  //}
-  //return;
+  if (!filtered.length) {
+    $('#tableBody_OneP').html(`
+      <tr>
+        <td colspan="4" class="text-center text-muted">此分頁下沒有符合的資料</td>
+      </tr>
+    `);
+    return;
+  }
+  return;
   
   // 依營區分組
   const groups = {};
@@ -877,41 +883,9 @@ function renderTable_OneP(data) {
 		</td>
       </tr>`).join('');
   }
-
-  //$('#tableBody').html(html);
   
   $('#tableBody_OneP').html(html);
 
-  // 綁定「修改」
-  $('#tableBody').off('click', '.btn-edit').on('click', '.btn-edit', function(){
-    const $btn = $(this);
-    openEditor({
-      name:  $btn.data('name'),
-      code:  $btn.data('code'),
-      job:   $btn.data('job'),
-      level: $btn.data('level'),
-      attack:$btn.data('attack'),
-      camp:  $btn.data('camp'),
-      rowIndex: Number($btn.data('row') || 0)
-    }, (updated) => {
-      // 更新前端當列
-      const tr = $btn.closest('tr')[0];
-      const tds = tr.querySelectorAll('td');
-      tds[0].textContent = updated.name;
-      tds[1].textContent = updated.code;
-      tds[2].textContent = updated.job;
-      tds[3].textContent = updated.level;
-      tds[4].textContent = updated.attack;
-      tds[5].textContent = updated.camp;
-
-      $btn.data('name',  updated.name);
-      $btn.data('code',  updated.code);
-      $btn.data('job',   updated.job);
-      $btn.data('level', updated.level);
-      $btn.data('attack',updated.attack);
-      $btn.data('camp',  updated.camp);
-    });
-  });
 }
 
 
