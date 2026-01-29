@@ -1,142 +1,143 @@
 <!DOCTYPE html>
 <html lang="zh-TW" data-bs-theme="light">
 <head>
-  <meta charset="UTF-8" />
-  <title>🍁MapleStory Astar公會專屬網站🍁</title>
-
-  <!-- Bootstrap 5 -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
-
-  <!-- jQuery -->
-  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-
-  <!-- Bootstrap JS (Modal 需要) -->
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-
-  <!-- PapaParse -->
-  <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
-  
-  <!-- Chart.js -->
-  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
-
-  <!---->
-  <!-- 職業分佈統計 Modal -->
-<div class="modal fade" id="jobStatsModal" tabindex="-1" aria-labelledby="jobStatsLabel" aria-hidden="true">
-  <div class="modal-dialog modal-lg modal-dialog-scrollable">
-	<div class="modal-content">
-	  <div class="modal-header">
-		<h5 class="modal-title" id="jobStatsLabel">公會職業分佈統計（不含外援大大）</h5>
-		<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-	  </div>
-	  <div class="modal-body">
-		<canvas id="jobStatsCanvas" height="140"></canvas>
-		<small class="text-muted d-block mt-2">
-		  說明：統計來源為列表讀入的 Google Sheet；同義職業會自動合併（如「十字軍=英雄」）。
-		</small>
-	  </div>
-	  <div class="modal-footer">
-		<button class="btn btn-secondary btn-sm" data-bs-dismiss="modal">關閉</button>
-	  </div>
+	<meta charset="UTF-8" />
+	<title>🍁MapleStory Astar公會專屬網站🍁</title>
+	
+	<!-- Bootstrap 5 -->
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+	
+	<!-- jQuery -->
+	<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+	
+	<!-- Bootstrap JS (Modal 需要) -->
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+	
+	<!-- PapaParse -->
+	<script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
+	
+	<!-- Chart.js -->
+	<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+	
+	<!---->
+	<!-- 職業分佈統計 Modal -->
+	<div class="modal fade" id="jobStatsModal" tabindex="-1" aria-labelledby="jobStatsLabel" aria-hidden="true">
+	<div class="modal-dialog modal-lg modal-dialog-scrollable">
+		<div class="modal-content">
+		<div class="modal-header">
+			<h5 class="modal-title" id="jobStatsLabel">公會職業分佈統計（不含外援大大）</h5>
+			<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+		</div>
+		<div class="modal-body">
+			<canvas id="jobStatsCanvas" height="140"></canvas>
+			<small class="text-muted d-block mt-2">
+			說明：統計來源為列表讀入的 Google Sheet；同義職業會自動合併（如「十字軍=英雄」）。
+			</small>
+		</div>
+		<div class="modal-footer">
+			<button class="btn btn-secondary btn-sm" data-bs-dismiss="modal">關閉</button>
+		</div>
+		</div>
 	</div>
-  </div>
-</div>
+	</div>
 
-  <!---->
+	<!---->
 
 
-  <style>
-	body 
-	{
-        overflow-y: scroll;
-        margin: 0;
-        padding: 0;
-    }
-  
-    .status-badge { font-size: 0.85rem; }
-    .group-row { background: rgba(0,0,0,.03); font-weight: 600; }
-    button.secondary { background: transparent; color: var(--text); border: 1px solid var(--border); }
-    #sourceBadge { display: none !important; }
+	<style>
+		body 
+		{
+			overflow-y: scroll;
+			margin: 0;
+			padding: 0;
+		}
 	
-	<!-- /* 分頁外框 + 顏色 */ -->
-	.nav-tabs-custom .nav-link{
-	  border:2px solid transparent;
-	  font-weight:600;
-	  margin-right:.5rem;
-	}
-	.nav-tabs-custom .nav-link:hover{
-	  opacity:.9;
-	}
-
-	<!-- /* 普通拉圖斯（藍） */ -->
-	.nav-tabs-custom .tab-latus{
-	  color:#0d6efd;
-	  border-color:#0d6efd;
-	}
-	.nav-tabs-custom .tab-latus.active{
-	  color:#fff;
-	  background:#0d6efd;
-	}
+		.status-badge { font-size: 0.85rem; }
+		.group-row { background: rgba(0,0,0,.03); font-weight: 600; }
+		button.secondary { background: transparent; color: var(--text); border: 1px solid var(--border); }
+		#sourceBadge { display: none !important; }
+		
+		<!-- /* 分頁外框 + 顏色 */ -->
+		.nav-tabs-custom .nav-link{
+		border:2px solid transparent;
+		font-weight:600;
+		margin-right:.5rem;
+		}
+		.nav-tabs-custom .nav-link:hover{
+		opacity:.9;
+		}
 	
-	<!-- /* 困藍拉圖斯（紫） */ -->
-	.nav-tabs-custom .tab-latushard{
-	  color:#6f42c1;
-	  border-color:#6f42c1;
-	}
-	.nav-tabs-custom .tab-latushard.active{
-	  color:#fff;
-	  background:#6f42c1;
-	}	
-
-	<!-- /* 殘暴炎魔（橘） */ -->
-	.nav-tabs-custom .tab-zakum{
-	  color:#fd7e14;
-	  border-color:#fd7e14;
-	}
-	.nav-tabs-custom .tab-zakum.active{
-	  color:#fff;
-	  background:#fd7e14;
-	}
-
-	<!-- /* 訓練營&外援（綠） */ -->
-	.nav-tabs-custom .tab-misc{
-	  color:#198754;
-	  border-color:#198754;
-	}
-	.nav-tabs-custom .tab-misc.active{
-	  color:#fff;
-	  background:#198754;
-	}
+		<!-- /* 普通拉圖斯（藍） */ -->
+		.nav-tabs-custom .tab-latus{
+		color:#0d6efd;
+		border-color:#0d6efd;
+		}
+		.nav-tabs-custom .tab-latus.active{
+		color:#fff;
+		background:#0d6efd;
+		}
+		
+		<!-- /* 困藍拉圖斯（紫） */ -->
+		.nav-tabs-custom .tab-latushard{
+		color:#6f42c1;
+		border-color:#6f42c1;
+		}
+		.nav-tabs-custom .tab-latushard.active{
+		color:#fff;
+		background:#6f42c1;
+		}	
 	
-	.tab_css{display:flex;flex-wrap:wrap;justify-content:flex-start;}
-	.tab_css input{display:none}
-	.tab_css label{margin: 0 5px 5px 0; padding: 10px 16px; cursor: pointer; border-radius: 5px; background: #0d6efd; color: #fff; opacity: 0.638;}
-	.tab_content{order:1; display: none; width:100%; border-bottom: 3px solid #ddd; line-height: 1.6; font-size: 0.85rem; padding: 0px; margin-top: 8px; border: 1px solid #ddd; border-radius: 5px;}
-	.tab_css input:checked + label, .tab_css label:hover{opacity: 1; font-weight:bold;}
-	.tab_css input:checked + label + .tab_content{display: initial;}
+		<!-- /* 殘暴炎魔（橘） */ -->
+		.nav-tabs-custom .tab-zakum{
+		color:#fd7e14;
+		border-color:#fd7e14;
+		}
+		.nav-tabs-custom .tab-zakum.active{
+		color:#fff;
+		background:#fd7e14;
+		}
 	
-	.title{font-weight:bold; font-size:1.0rem;}
+		<!-- /* 訓練營&外援（綠） */ -->
+		.nav-tabs-custom .tab-misc{
+		color:#198754;
+		border-color:#198754;
+		}
+		.nav-tabs-custom .tab-misc.active{
+		color:#fff;
+		background:#198754;
+		}
+		
+		.tab_css{display:flex;flex-wrap:wrap;justify-content:flex-start;}
+		.tab_css input{display:none}
+		.tab_css label{margin: 0 5px 5px 0; padding: 10px 16px; cursor: pointer; border-radius: 5px; background: #0d6efd; color: #fff; opacity: 0.638;}
+		.tab_content{order:1; display: none; width:100%; border-bottom: 3px solid #ddd; line-height: 1.6; font-size: 0.85rem; padding: 0px; margin-top: 8px; border: 1px solid #ddd; border-radius: 5px;}
+		.tab_css input:checked + label, .tab_css label:hover{opacity: 1; font-weight:bold;}
+		.tab_css input:checked + label + .tab_content{display: initial;}
+		
+		.title{font-weight:bold; font-size:1.0rem;}
+		
+		<!-- /* 針對標籤內的內容進行重製 */ -->
+		.reset-content 
+		{
+			<!-- /* all: revert; */ -->   
+			display: table-cell;  
+			line-height: 1.5; 
+			font-size: 1rem;    
+			padding: 0.5;           
+			border: none;         
+		}
 	
-	<!-- /* 針對標籤內的內容進行重製 */ -->
-	.reset-content 
-	{
-		<!-- /* all: revert; */ -->   
-		display: table-cell;  
-		line-height: 1.5; 
-		font-size: 1rem;    
-		padding: 0.5;           
-		border: none;         
-	}
+		<!-- /* 如果是針對整個表格，可以更簡單 */ -->
+		.clean-table 
+		{
+			all: revert;
+			width: 100%;
+			border-collapse: collapse;
+		}
 
-	<!-- /* 如果是針對整個表格，可以更簡單 */ -->
-	.clean-table 
-	{
-		all: revert;
-		width: 100%;
-		border-collapse: collapse;
-	}
-
-  </style>
+	</style>
 </head>
+
 <body class="bg-body">
 	<nav class="navbar navbar-expand-lg bg-primary navbar-dark">
 		<div class="container-fluid">
@@ -145,17 +146,14 @@
 			<span id="sourceBadge" class="badge bg-light text-dark status-badge">sheetId=1-j04395CPwDlZnJ2vUt3k4wsT5rPHgQWmujSQCi76Fs | gid=0</span>
 			<!-- 小夥伴清單 -->
 			<button id="backToList" class="btn btn-outline-light btn-sm title">👨‍👩‍👧‍👦 公會小夥伴</button>
+			<!-- 遊戲攻略 -->
 			<button id="Guide" class="btn btn-outline-light btn-sm title">🚀 遊戲攻略</button>
-			<!-- 全職業攻略按鈕（武器圖案） -->
-			<!-- <a href="https://docs.google.com/spreadsheets/d/1lPS_dyOfFe04SbmavvqAZT6GVTOuN-F-qSXDhQlpfUY/edit?gid=0#gid=0" target="_blank" rel="noopener noreferrer" class="btn btn-outline-light btn-sm" title="全職業攻略">⚔️ 全職業攻略</a> -->
-			<!-- 全職業四轉技能任務按鈕（任務圖案） -->
-			<!-- <a href="https://docs.google.com/document/u/0/d/1fripMi-WrPOh9ZpdAfUlyiUZd42Btt_tIpNohXLLE3A/mobilebasic" target="_blank" rel="noopener noreferrer" class="btn btn-outline-light btn-sm" title="全職業攻略">🧾 全職業技能任務</a> -->
-			<!-- 第三方交易平台按鈕 -->
+			<!-- 楓之谷圖鑑  -->
+			<a href="https://www.artalemaplestory.com/" target="_blank" rel="noopener noreferrer" class="btn btn-outline-light btn-sm title" title="楓之谷圖鑑">🍁 楓之谷圖鑑</a>
+			<!-- 第三方交易平台 -->
 			<a href="https://artale-market.org/" target="_blank" rel="noopener noreferrer" class="btn btn-outline-light btn-sm title" title="第三方交易平台">🏪 第三方交易平台</a>
 			<!-- 怪物掉落物查詢工具按鈕（怪物圖案） -->
 			<a href="https://a2983456456.github.io/artale-drop/" target="_blank" rel="noopener noreferrer" class="btn btn-outline-light btn-sm title" title="怪物掉落物查詢工具">👾 怪物掉落物查詢工具</a>
-			<!-- 女神 400 速解小工具按鈕 -->
-			<!--  <a href="https://rvgin.github.io/tower-of-goddess/" target="_blank" rel="noopener noreferrer" class="btn btn-outline-light btn-sm" title="女神 400 速解小工具">👸 女神 400 速解小工具</a> -->
 			<!-- 夜間模式 -->
 			<button id="toggleTheme" class="btn btn-outline-light btn-sm title"">🌙 夜間模式</button>
 		</div>
