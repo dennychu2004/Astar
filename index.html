@@ -868,13 +868,12 @@ function renderTable_OneP(data) {
         <td>${r.category ?? ''}</td>
         <td>${r.name ?? ''}</td>
         <td>${r.keyword ?? ''}</td>
-        //<td>${r.link ?? ''}</td>
 		<td>
 		${r.link ? `
 		<a href="${r.link}" target="_blank">
 		  <img src="https://lh3.googleusercontent.com/d/${r.link}=h200?authuser=0" alt=r.name style="width: 100px;">
 		</a>
-	  ` : '無圖片'}
+	    ` : '無圖片'}
 		</td>
       </tr>`).join('');
   }
