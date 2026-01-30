@@ -879,14 +879,13 @@ $(function ()
 		renderTable_OneP(lastData_OneP, m_SearchWord);
 	});
 	
-	txt_Search.addEventListener('keypress', (e) => 
-	{
-		if (e.key === 'Enter') 
-		{
+	$('input[name="txt_Search"]').on('keypress', function (e) {
+		if (e.which === 13) 
+		{ // 13 是 Enter 鍵的代碼
 			const m_SearchWord = document.querySelector('input[name="txt_Search"]').value;
 			renderTable_OneP(lastData_OneP);
 		}
-	});	
+	});
 	
 	// Event 叔叔一圖流：重置
 	$('#btn_ResetOneP').on('click', function () 
