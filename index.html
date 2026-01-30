@@ -803,6 +803,22 @@ function renderTable_OneP(data, searchWord = "")
 			{
 				const m_sKeyword = p.keyword ?? "";
 				const m_bKeyword = p.keyword.indexOf(searchWord);
+				if (p.keyword.indexOf(searchWord) != -1)
+				{
+					html += `
+					<tr>
+						<td>${p.category ?? ''}</td>
+						<td>${p.name ?? ''}</td>
+						<td>${p.keyword ?? ''}</td>
+						<td>
+						${p.link ? `
+						<a href="https://drive.google.com/file/d/${r.link}/" target="_blank">
+						<img src="https://lh3.googleusercontent.com/d/${r.link}=h800?authuser=0" alt=${r.name} title=${r.name} height="200px;">
+						</a>
+						` : '無圖片'}
+						</td>
+					</tr>`;	
+				}
 			}
 		}
 	}
