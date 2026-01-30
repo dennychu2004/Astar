@@ -781,19 +781,22 @@ function renderTable_OneP(data, searchWord = "")
 				<td colspan="4">一圖流分類：${k}${note}（${groups[k].length}）</td>
 			</tr>`;
 		}
-		html += groups[k].map(r => `
-		<tr>
-			<td>${r.category ?? ''}</td>
-			<td>${r.name ?? ''}</td>
-			<td>${r.keyword ?? ''}</td>
-			<td>
-			${r.link ? `
-			<a href="https://drive.google.com/file/d/${r.link}/" target="_blank">
-			<img src="https://lh3.googleusercontent.com/d/${r.link}=h800?authuser=0" alt=${r.name} title=${r.name} height="200px;">
-			</a>
-			` : '無圖片'}
-			</td>
-		</tr>`).join('');
+		if (searchWord == "" || r.keyword.indexOf(searchWord) !== -1)
+		{
+			html += groups[k].map(r => `
+			<tr>
+				<td>${r.category ?? ''}</td>
+				<td>${r.name ?? ''}</td>
+				<td>${r.keyword ?? ''}</td>
+				<td>
+				${r.link ? `
+				<a href="https://drive.google.com/file/d/${r.link}/" target="_blank">
+				<img src="https://lh3.googleusercontent.com/d/${r.link}=h800?authuser=0" alt=${r.name} title=${r.name} height="200px;">
+				</a>
+				` : '無圖片'}
+				</td>
+			</tr>`).join('');
+		}
 	}
 	
 	$('#tableBody_OneP').html(html);
