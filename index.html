@@ -58,13 +58,15 @@
 		#sourceBadge { display: none !important; }
 		
 		<!-- /* 分頁外框 + 顏色 */ -->
-		.nav-tabs-custom .nav-link{
-		border:2px solid transparent;
-		font-weight:600;
-		margin-right:.5rem;
+		.nav-tabs-custom .nav-link
+		{
+			border:2px solid transparent;
+			font-weight:600;
+			margin-right:.5rem;
 		}
-		.nav-tabs-custom .nav-link:hover{
-		opacity:.9;
+		.nav-tabs-custom .nav-link:hover
+		{
+			opacity:.9;
 		}
 	
 		<!-- /* 普通拉圖斯（藍） */ -->
@@ -139,7 +141,7 @@
 </head>
 
 <body class="bg-body">
-	<nav class="navbar navbar-expand-lg bg-primary navbar-dark">
+	<nav class="navbar navbar-expand-lg bg-primary navbar-dark fixed-top">
 		<div class="container-fluid">
 		<span class="navbar-brand btn-sm title" style="font-size:1.25rem;">🍁MapleStory Astar公會專屬網站🍁-1423</span>
 		<div class="ms-auto d-flex align-items-center gap-2">
@@ -160,13 +162,13 @@
 		</div>
 	</nav>
 
-  <!-- 公會小夥伴 -->
+	<!-- 公會小夥伴 -->
 	<div id="homePage" class="container py-4">
 		<div class="d-flex align-items-center justify-content-between mb-2">
 			<h3 class="mb-0"><b>👩‍👩‍👧‍👦 公會小夥伴</b></h3>
 		</div>
 		
-    <!-- 提示卡片 -->
+		<!-- 提示卡片 -->
 		<div class="card shadow-sm mb-4">
 		<div class="card-body">
 			<div class="d-flex justify-content-between align-items-center mb-0">
@@ -210,7 +212,7 @@
 				</li>
 			</ul>
 	
-	
+			<!-- 腳色表格 -->
 			<div class="table-responsive">
 			<table class="table table-striped table-hover align-middle reset-content">
 				<thead class="table-secondary">
@@ -235,28 +237,6 @@
 		</div>
 	</div>
 
-<!-- 叔叔版一圖流攻略 Modal -->
-	<div class="modal fade" id="uncleGuideModal" tabindex="-1" aria-labelledby="uncleGuideLabel" aria-hidden="true">
-		<div class="modal-dialog modal-xl modal-dialog-scrollable">
-			<div class="modal-content">
-			<div class="modal-header">
-				<h5 class="modal-title" id="uncleGuideLabel">叔叔版一圖流攻略</h5>
-				<a id="uncleGuideOpenNew" class="btn btn-link btn-sm" target="_blank" rel="noopener noreferrer">在新頁面開啟</a>
-				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="關閉"></button>
-			</div>
-			<div class="modal-body">
-				<div class="ratio ratio-16x9">
-				<iframe id="uncleGuideFrame" src="" title="Uncle Guide" style="border:0;"></iframe>
-				</div>
-				<small class="text-muted d-block mt-2">若未顯示，請確認雲端資料夾權限為「知道連結的任何人可檢視」。</small>
-			</div>
-			<div class="modal-footer">
-				<button class="btn btn-secondary btn-sm" data-bs-dismiss="modal">關閉</button>
-			</div>
-			</div>
-		</div>
-	</div>
-
 	<!-- 遊戲攻略 -->
 	<div id="GuidePage" class="container py-4 d-none">
 		<div class="d-flex align-items-center justify-content-between mb-3">
@@ -268,13 +248,11 @@
 
 		<div class="card shadow-sm">
 			<div class="card-body">
-			
-			<!-- <div class="tab_css nav-link"> -->
 			<div class="tab_css nav-link">
+			
 			<!-- TAB1 叔叔一圖流 start -->
 			<input id="tab1" type="radio" name="tab" checked="checked"/>
 			<label for="tab1" style="background-color:#fd7e14;">叔叔一圖流</label>
-			
 			
 			<div class="tab_content card border-0">
 				<div class="d-flex justify-content-between align-items-center mb-2">
@@ -282,6 +260,7 @@
 					<div class="d-flex align-items-center gap-2">
 						<input type="text" name="txt_Search" style="min-width: 200px !important; display: block !important;" placeholder="輸入搜尋內容">
 						<button id="btn_SearchOneP" class="btn btn-outline-secondary btn-sm">搜尋</button>
+						<button id="btn_ResetOneP" class="btn btn-outline-secondary btn-sm">重置</button>
 						<button id="reloadBtn_OneP" class="btn btn-outline-secondary btn-sm">重新整理</button>
 					</div>
 				</div>
@@ -324,7 +303,6 @@
 			</div>
 			<!-- TAB3 全職業四轉技能 end -->
 			
-	
 			<!-- TAB4 困難拉圖斯 start -->
 			<input id="tab4" type="radio" name="tab"/>
 			<label for="tab4" style="background-color:#6f42c1;">困難拉圖斯</label>
@@ -863,13 +841,13 @@ $(function ()
 	updateSourceBadge(target.sheetId, target.gid);
 	loadFromSheet(target.sheetId, target.gid);
 	
-	// Event 小夥伴清單重新整理
+	// Event 小夥伴清單：重新整理
 	$('#reloadBtn').on('click', function () 
 	{
 		loadFromSheet(target.sheetId, target.gid);
 	});
 	
-	// Event 小夥伴清單新增角色
+	// Event 小夥伴清單：新增角色
 	$('#addBtn').on('click', function () 
 	{
 		openEditor({
@@ -888,16 +866,24 @@ $(function ()
 	updateSourceBadge(target_OneP.sheetId, target_OneP.gid);
 	loadFromSheet_OneP(target_OneP.sheetId, target_OneP.gid);
 	
-	// Event 叔叔一圖流重新整理
+	// Event 叔叔一圖流：重新整理
 	$('#reloadBtn_OneP').on('click', function () 
 	{
 		loadFromSheet_OneP(target_OneP.sheetId, target_OneP.gid);
 	});
 	
+	// Event 叔叔一圖流：搜尋
 	$('#btn_SearchOneP').on('click', function () 
 	{
 		const m_SearchWord = document.querySelector('input[name="txt_Search"]').value;
 		renderTable_OneP(lastData_OneP, m_SearchWord);
+	});
+	
+	// Event 叔叔一圖流：重置
+	$('#btn_ResetOneP').on('click', function () 
+	{
+		const m_SearchWord = document.querySelector('input[name="txt_Search"]').value;
+		renderTable_OneP(lastData_OneP);
 	});
   
 }
