@@ -781,9 +781,9 @@ function renderTable_OneP(data, searchWord = "")
 				<td colspan="4">一圖流分類：${k}${note}（${groups[k].length}）</td>
 			</tr>`;
 		}
-		const m_sKeyword = "${r.keyword}";
-		const m_bKeyword = "${r.keyword}".indexOf(searchWord);
-		if (searchWord == "" || "${r.keyword}".indexOf(searchWord) !== -1)
+		const m_sKeyword = r.keyword ?? "";
+		const m_bKeyword = r.keyword.indexOf(searchWord);
+		if (searchWord == "" || r.keyword.indexOf(searchWord) !== -1)
 		{
 			html += groups[k].map(r => `
 			<tr>
