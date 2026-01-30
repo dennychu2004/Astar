@@ -464,6 +464,7 @@ function parseSheetFromUrl(url)
 ========================= */
 let currentTab = 'latus';   // 'latus' | 'latushard' | 'zakum' | 'trainext'
 let lastData   = [];        // 讀取後保存，切分頁時重繪使用
+let lastData_OneP   = [];        // 讀取後保存，切分頁時重繪使用
 
 /* =========================
    讀取 Google Sheet（以 CSV 匯出）
@@ -700,38 +701,38 @@ function loadFromSheet_OneP(sheetId, gid = '0', searchWord = "")
 			if (!result.data || result.data.length < 2) 
 			{
 				$('#msg').text('沒有資料可顯示');
-				lastData = [];
-				renderTable_OneP(lastData);
+				lastData_OneP = [];
+				renderTable_OneP(lastData_OneP);
 				return;
 			}
 	
 			const rows = result.data.slice(1);
-			lastData = rows
+			lastData_OneP = rows
 			.map((r, i) => ({
 				category:  	r[0], // A
-				name:  		r[1], // B（主鍵）
+				name:  		r[1], // B
 				keyword:	r[2], // C
 				link: 		r[3], // D
 				rowIndex: 	i + 2
 			}))
 			.filter(r => r && r.name);
 	
-			renderTable_OneP(lastData, searchWord);
+			renderTable_OneP(lastData_OneP);
 		} 
 		catch (e) 
 		{
 			console.error(e);
 			$('#msg').text('解析資料時發生錯誤');
-			lastData = [];
-			renderTable_OneP(lastData);
+			lastData_OneP = [];
+			renderTable_OneP(lastData_OneP);
 		}
 		},
 		error: function (err) 
 		{
 			console.error(err);
 			$('#msg').text('讀取失敗，請確認該 Google Sheet 已設為「知道連結的任何人可檢視」。');
-			lastData = [];
-			renderTable_OneP(lastData);
+			lastData_OneP = [];
+			renderTable_OneP(lastData_OneP);
 		}
 	});
 }
@@ -780,9 +781,7 @@ function renderTable_OneP(data, searchWord = "")
 			<tr class="group-row">
 				<td colspan="4">一圖流分類：${k}${note}（${groups[k].length}）</td>
 			</tr>`;
-		}
-		if (searchWord == "")
-		{
+			
 			html += groups[k].map(r => `
 			<tr>
 				<td>${r.category ?? ''}</td>
@@ -801,9 +800,7 @@ function renderTable_OneP(data, searchWord = "")
 		{
 			for (const p of groups[k]) 
 			{
-				const m_sKeyword = p.keyword ?? "";
-				const m_bKeyword = p.keyword.indexOf(searchWord);
-				if (p.keyword.indexOf(searchWord) != -1)
+				if (p.category.indexOf(searchWord) != -1 || p.name.indexOf(searchWord) != -1 || p.keyword.indexOf(searchWord) != -1)
 				{
 					html += `
 					<tr>
@@ -900,7 +897,7 @@ $(function ()
 	$('#btn_SearchOneP').on('click', function () 
 	{
 		const m_SearchWord = document.querySelector('input[name="txt_Search"]').value;
-		loadFromSheet_OneP(target_OneP.sheetId, target_OneP.gid, m_SearchWord);
+		enderTable_OneP(lastData_OneP, m_SearchWord);
 	});
   
 }
