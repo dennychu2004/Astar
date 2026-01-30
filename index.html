@@ -879,11 +879,12 @@ $(function ()
 		renderTable_OneP(lastData_OneP, m_SearchWord);
 	});
 	
-	$('input[name="txt_Search"]').on('keypress', function (e) {
+	$('input[name="txt_Search"]').on('keypress', function (e) 
+	{
 		if (e.which === 13) 
 		{ // 13 是 Enter 鍵的代碼
 			const m_SearchWord = document.querySelector('input[name="txt_Search"]').value;
-			renderTable_OneP(lastData_OneP);
+			renderTable_OneP(lastData_OneP, m_SearchWord);
 		}
 	});
 	
