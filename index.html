@@ -781,9 +781,7 @@ function renderTable_OneP(data, searchWord = "")
 				<td colspan="4">一圖流分類：${k}${note}（${groups[k].length}）</td>
 			</tr>`;
 		}
-		const m_sKeyword = r.keyword ?? "";
-		const m_bKeyword = r.keyword.indexOf(searchWord);
-		if (searchWord == "" || r.keyword.indexOf(searchWord) !== -1)
+		if (searchWord == "")
 		{
 			html += groups[k].map(r => `
 			<tr>
@@ -798,6 +796,14 @@ function renderTable_OneP(data, searchWord = "")
 				` : '無圖片'}
 				</td>
 			</tr>`).join('');
+		}
+		else
+		{
+			for (const p of groups[k]) 
+			{
+				const m_sKeyword = p.keyword ?? "";
+				const m_bKeyword = p.keyword.indexOf(searchWord);
+			}
 		}
 	}
 	
