@@ -280,6 +280,8 @@
 				<div class="d-flex justify-content-between align-items-center mb-2">
 					<h4 class="card-title mb-2">🌟 叔叔一圖流</h4>
 					<div class="d-flex align-items-center gap-2">
+						<input type="text" name="txt_Search" style="min-width: 200px !important; display: block !important;" placeholder="輸入搜尋內容">
+						<button id="btn_SearchOneP" class="btn btn-outline-secondary btn-sm">搜尋</button>
 						<button id="reloadBtn_OneP" class="btn btn-outline-secondary btn-sm">重新整理</button>
 					</div>
 				</div>
@@ -679,7 +681,7 @@ function setTab(tab)
 	$('#tabTrainExt').on('click',  () => setTab('trainext'));
 
 
-function loadFromSheet_OneP(sheetId, gid = '0') 
+function loadFromSheet_OneP(sheetId, gid = '0', searchWord = "") 
 {
 	$('#msg').text('');
 	$('#tableBody').html(`
@@ -695,11 +697,12 @@ function loadFromSheet_OneP(sheetId, gid = '0')
 		skipEmptyLines: true,
 		complete: function (result) {
 		try {
-			if (!result.data || result.data.length < 2) {
-			$('#msg').text('沒有資料可顯示');
-			lastData = [];
-			renderTable_OneP(lastData);
-			return;
+			if (!result.data || result.data.length < 2) 
+			{
+				$('#msg').text('沒有資料可顯示');
+				lastData = [];
+				renderTable_OneP(lastData);
+				return;
 			}
 	
 			const rows = result.data.slice(1);
@@ -713,7 +716,7 @@ function loadFromSheet_OneP(sheetId, gid = '0')
 			}))
 			.filter(r => r && r.name);
 	
-			renderTable_OneP(lastData);
+			renderTable_OneP(lastData, searchWord);
 		} 
 		catch (e) 
 		{
@@ -735,7 +738,7 @@ function loadFromSheet_OneP(sheetId, gid = '0')
 
 
 
-function renderTable_OneP(data) 
+function renderTable_OneP(data, searchWord = "") 
 {
 	const groupNotes = 
 	{
@@ -771,10 +774,13 @@ function renderTable_OneP(data)
 	for (const k of orderedKeys) 
 	{
 		const note = groupNotes[k] ? `　${groupNotes[k]}` : ''; // 有對照就加，沒有就空字串
-		html += `
-		<tr class="group-row">
-			<td colspan="4">一圖流分類：${k}${note}（${groups[k].length}）</td>
-		</tr>`;
+		if (searchWord == "")
+		{
+			html += `
+			<tr class="group-row">
+				<td colspan="4">一圖流分類：${k}${note}（${groups[k].length}）</td>
+			</tr>`;
+		}
 		html += groups[k].map(r => `
 		<tr>
 			<td>${r.category ?? ''}</td>
@@ -824,6 +830,7 @@ function updateSourceBadge(sheetId, gid)
 
 $(function () 
 {
+	// 載入小夥伴清單
 	const target = resolveSheetTarget(DEFAULT_SHEET_URL);
 	if (!target.sheetId) {
 		$('#msg').text('無法解析指定的 Google Sheet 連結或 sheetId');
@@ -832,11 +839,15 @@ $(function ()
 	updateSourceBadge(target.sheetId, target.gid);
 	loadFromSheet(target.sheetId, target.gid);
 	
-	$('#reloadBtn').on('click', function () {
+	// Event 小夥伴清單重新整理
+	$('#reloadBtn').on('click', function () 
+	{
 		loadFromSheet(target.sheetId, target.gid);
 	});
 	
-	$('#addBtn').on('click', function () {
+	// Event 小夥伴清單新增角色
+	$('#addBtn').on('click', function () 
+	{
 		openEditor({
 		name: '', code: '', job: '', level: '', attack: '', camp: '',
 		rowIndex: 0, __isNew: true
@@ -844,6 +855,7 @@ $(function ()
 	});
 	
 	
+	// 載入叔叔一圖流
 	const target_OneP = resolveSheetTarget(OnePicture_URL);
 	if (!target_OneP.sheetId) {
 		$('#msg').text('無法解析指定的 Google Sheet 連結或 sheetId');
@@ -852,8 +864,16 @@ $(function ()
 	updateSourceBadge(target_OneP.sheetId, target_OneP.gid);
 	loadFromSheet_OneP(target_OneP.sheetId, target_OneP.gid);
 	
-	$('#reloadBtn_OneP').on('click', function () {
+	// Event 叔叔一圖流重新整理
+	$('#reloadBtn_OneP').on('click', function () 
+	{
 		loadFromSheet_OneP(target_OneP.sheetId, target_OneP.gid);
+	});
+	
+	$('#btn_SearchOneP').on('click', function () 
+	{
+		const m_SearchWord = document.querySelector('input[name="txt_Search"]').value;
+		loadFromSheet_OneP(target_OneP.sheetId, target_OneP.gid, m_SearchWord);
 	});
   
 }
