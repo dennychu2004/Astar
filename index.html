@@ -862,12 +862,17 @@ function renderTable(data)
 		  ${r.name ?? ''}
 	  </td>
 	  <td>
+		<span style="float: left;">
 		${r.code ?? ''}
+		</span>
+		<span style="float: right;">
 		<button type="button"
 		  class="name-history-btn"
 		  title="查看更名紀錄"
 		  data-name="${r.name ?? ''}"
 		  data-code="${r.code ?? ''}">?</button> 
+		</span>
+		<div style="clear: both;"></div>
 	  </td>
    <!--   <td>${r.code ?? ''}</td> -->
       <td>${r.job ?? ''}</td>
