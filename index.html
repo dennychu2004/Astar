@@ -1414,7 +1414,7 @@ function openEditor(values, onSave)
 			await appendRenameLogToGAS({
 			  code:   updated.code,
 			  name:   updated.name,
-			  // when 可省略，就會用現在時間
+			  when:   new Date().toISOString()
 			});
 			// ⬇ 這行很關鍵：把快取重新讀進來
 			loadRenameLog(t.sheetId);
