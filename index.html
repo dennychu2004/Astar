@@ -1406,7 +1406,6 @@ function openEditor(values, onSave)
         throw new Error(result.message || '更新/新增失敗');
       }
 
-      if (isNew) {
 		  const t = resolveSheetTarget(DEFAULT_SHEET_URL);
 		  loadFromSheet(t.sheetId, t.gid);
 
@@ -1424,9 +1423,10 @@ function openEditor(values, onSave)
 			// 可選：提示但不擋流程
 			// alert('角色已新增，但寫入更名LOG失敗：' + logErr.message);
 		  }
-		} else {
-		  onSave?.(updated);
-		}
+		//if (isNew) {
+		//} else {
+		//  onSave?.(updated);
+		//}
 		alert(isNew ? '新增成功！' : '更新成功！');
 		close();
     } catch (e) {
