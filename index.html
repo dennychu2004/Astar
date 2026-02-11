@@ -8,7 +8,7 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
   
   <!-- jQuery -->
-	<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
   
   <!-- Bootstrap JS (Modal 需要) -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
@@ -1406,6 +1406,7 @@ function openEditor(values, onSave)
         throw new Error(result.message || '更新/新增失敗');
       }
 
+      if (isNew) {
 		  const t = resolveSheetTarget(DEFAULT_SHEET_URL);
 		  loadFromSheet(t.sheetId, t.gid);
 
@@ -1423,12 +1424,9 @@ function openEditor(values, onSave)
 			// 可選：提示但不擋流程
 			// alert('角色已新增，但寫入更名LOG失敗：' + logErr.message);
 		  }
-
-        //if (isNew) 
-	    //{
-		//} else {
-		//  onSave?.(updated);
-		//}
+		} else {
+		  onSave?.(updated);
+		}
 		alert(isNew ? '新增成功！' : '更新成功！');
 		close();
     } catch (e) {
