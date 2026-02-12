@@ -953,12 +953,15 @@ function renderTable(data)
     const tds = tr.querySelectorAll('td');
     tds[0].textContent = updated.name;
     //tds[1].textContent = updated.code;
-	tds[1].innerHTML = `<button type="button"
-		    class="name-history-btn"
-		    title="查看更名紀錄"
-		    data-name="${updated.name ?? ''}"
-		    data-code="${updated.code ?? ''}">?</button>
-	      <span class="font-monospace">${updated.code ?? ''}</span>`;
+	tds[1].innerHTML = 
+	      `<div class="d-inline-flex align-items-center" style="gap:.5rem;">
+		     <button type="button"
+		             class="name-history-btn"
+		             title="查看更名紀錄"
+		             data-name="${updated.name ?? ''}"
+		             data-code="${updated.code ?? ''}">?</button>
+	         <span class="font-monospace">${updated.code ?? ''}</span>`
+		   </div>;
     tds[2].textContent = updated.job;
     tds[3].textContent = updated.level;
     tds[4].textContent = updated.attack;
