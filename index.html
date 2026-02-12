@@ -148,7 +148,7 @@
 <body class="bg-body">
   <nav class="navbar navbar-expand-lg bg-primary navbar-dark sticky-top" style="padding:3px">
     <div class="container-fluid">
-    <span class="navbar-brand btn-sm title" style="font-size:1.25rem;">🍁MapleStory Astar公會專屬網站🍁-1621</span>
+    <span class="navbar-brand btn-sm title" style="font-size:1.25rem;">🍁MapleStory Astar公會專屬網站🍁-0911</span>
     <div class="ms-auto d-flex align-items-center gap-2">
       <span id="sourceBadge" class="badge bg-light text-dark status-badge">sheetId=1-j04395CPwDlZnJ2vUt3k4wsT5rPHgQWmujSQCi76Fs | gid=0</span>
       <!-- 小夥伴清單 -->
@@ -688,8 +688,8 @@ $(document).on('click', '.name-history-btn', function () {
 /* =========================
    設定：請填你的 Apps Script Web App（exec）URL
 ========================= */
-const GAS_UPDATE_URL = //'https://script.google.com/macros/s/AKfycbwbEW15caNLWOUqm8VKby2tN_JfCySTT6xFtreuFz9K0Ex51qioyeqNi476jVH4vlGo/exec';
-'https://script.google.com/macros/s/AKfycbwAAMocuEMv_Q1xbEqP7yykZ61Wvo-8v_aMDvzyDjrxHtBFtS2MDYr1rTXZfRUaAfL8/exec';
+const GAS_UPDATE_URL = 'https://script.google.com/macros/s/AKfycbwAAMocuEMv_Q1xbEqP7yykZ61Wvo-8v_aMDvzyDjrxHtBFtS2MDYr1rTXZfRUaAfL8/exec';
+//'https://script.google.com/macros/s/AKfycbwbEW15caNLWOUqm8VKby2tN_JfCySTT6xFtreuFz9K0Ex51qioyeqNi476jVH4vlGo/exec';
 // 把「新增角色」事件記錄到 歷史更名LOG（gid=170886432）
 async function appendRenameLogToGAS({ code, name, when }) {
   if (!code || !name) throw new Error('appendRenameLog 需要 code 與 name');
@@ -1406,27 +1406,13 @@ function openEditor(values, onSave)
         throw new Error(result.message || '更新/新增失敗');
       }
 
+      if (isNew) {
 		  const t = resolveSheetTarget(DEFAULT_SHEET_URL);
 		  loadFromSheet(t.sheetId, t.gid);
-
-		  // ★ 新增：把新增事件記錄到「歷史更名LOG」
-		  try {
-			await appendRenameLogToGAS({
-			  code:   updated.code,
-			  name:   updated.name,
-			  when:   new Date().toISOString()
-			});
-			// ⬇ 這行很關鍵：把快取重新讀進來
-			loadRenameLog(t.sheetId);
-		  } catch (logErr) {
-			console.warn('寫入更名LOG失敗（不影響新增本體）：', logErr);
-			// 可選：提示但不擋流程
-			// alert('角色已新增，但寫入更名LOG失敗：' + logErr.message);
-		  }
-		//if (isNew) {
-		//} else {
-		//  onSave?.(updated);
-		//}
+		  loadRenameLog(t.sheetId);
+		} else {
+		  onSave?.(updated);
+		}
 		alert(isNew ? '新增成功！' : '更新成功！');
 		close();
     } catch (e) {
