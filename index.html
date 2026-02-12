@@ -956,8 +956,8 @@ function renderTable(data)
 	tds[1].innerHTML = `<button type="button"
 		    class="name-history-btn"
 		    title="查看更名紀錄"
-		    data-name="${r.name ?? ''}"
-		    data-code="${r.code ?? ''}">?</button>
+		    data-name="${updated.name ?? ''}"
+		    data-code="${updated.code ?? ''}">?</button>
 	      <span class="font-monospace">${updated.code ?? ''}</span>`;
     tds[2].textContent = updated.job;
     tds[3].textContent = updated.level;
