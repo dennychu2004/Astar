@@ -952,7 +952,7 @@ function renderTable(data)
     const tr = $btn.closest('tr')[0];
     const tds = tr.querySelectorAll('td');
     tds[0].textContent = updated.name;
-    //tds[1].textContent = updated.code;
+    //tds[1].textContent = updated.code; //20260212 KuanTa* 重新刷新列時增加Log查詢按鈕
 	tds[1].innerHTML = 
 	      `<div class="d-inline-flex align-items-center" style="gap:.5rem;">
 		     <button type="button"
@@ -974,6 +974,8 @@ function renderTable(data)
     $btn.data('attack',updated.attack);
     $btn.data('camp',  updated.camp);
     });
+	
+	loadRenameLog(target.sheetId); //20260212 KuanTa+ 重新載入更名Log
   });
 }
 
