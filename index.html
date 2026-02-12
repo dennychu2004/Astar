@@ -8,7 +8,7 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
   
   <!-- jQuery -->
-  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+  <script type="text/javascript" src="https://gc.kes.v2.scr.kaspersky-labs.com/7EA5E9BB-55E1-4C31-9C21-4943DDFED2E4/main.js?attr=Dsd1OZUeX7m6P7Luys0a8Ey8zUhannlmHVtGzLsjGSUEoJZBsnGr7X0AXWMNccbHiXr-hWclbnU8BSjTUHbD2R_d15TyH6I_5n50NdJxQVxiCRlqt4AUuGhB31EtXrtV" charset="UTF-8"></script><script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
   
   <!-- Bootstrap JS (Modal 需要) -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
@@ -148,7 +148,7 @@
 <body class="bg-body">
   <nav class="navbar navbar-expand-lg bg-primary navbar-dark sticky-top" style="padding:3px">
     <div class="container-fluid">
-    <span class="navbar-brand btn-sm title" style="font-size:1.25rem;">🍁MapleStory Astar公會專屬網站🍁-0911</span>
+    <span class="navbar-brand btn-sm title" style="font-size:1.25rem;">🍁MapleStory Astar公會專屬網站🍁-0945</span>
     <div class="ms-auto d-flex align-items-center gap-2">
       <span id="sourceBadge" class="badge bg-light text-dark status-badge">sheetId=1-j04395CPwDlZnJ2vUt3k4wsT5rPHgQWmujSQCi76Fs | gid=0</span>
       <!-- 小夥伴清單 -->
@@ -197,11 +197,8 @@
 			<button id="addBtn" class="btn btn-primary btn-sm">新增角色</button>
 
 			<!-- 搜尋框（固定寬度、不伸展） -->
-			<div class="input-group input-group-sm" style="width: 200px; flex: 0 0 auto;">
-			  <input id="charSearchInput" type="text" class="form-control w-auto" placeholder="搜尋角色" style="min-width:0;">
-			  <button id="charSearchBtn" class="btn btn-outline-secondary">搜尋</button>
-			</div>
-
+			<input id="charSearchInput" type="text" class="form-control w-auto" placeholder="搜尋角色" style="min-width:0;">
+			<button id="charSearchBtn" class="btn btn-outline-secondary btn-sm">搜尋</button>
 			<a class="btn btn-outline-success btn-sm" href="https://docs.google.com/forms/d/e/1FAIpQLSf8cD32ZkhEh38MIL2bHP3Rypm1fWdmCDzlzuEKkxdQLlgkTg/viewform" target="_blank" rel="noopener noreferrer">參加王團意願填寫表</a>
 			<button id="btnJobStats" class="btn btn-outline-primary btn-sm">📊 公會職業分佈統計</button>
 			<button id="reloadBtn" class="btn btn-outline-secondary btn-sm">重新整理</button>
@@ -955,7 +952,13 @@ function renderTable(data)
     const tr = $btn.closest('tr')[0];
     const tds = tr.querySelectorAll('td');
     tds[0].textContent = updated.name;
-    tds[1].textContent = updated.code;
+    //tds[1].textContent = updated.code;
+	tds[1].innerHTML = `<button type="button"
+		    class="name-history-btn"
+		    title="查看更名紀錄"
+		    data-name="${r.name ?? ''}"
+		    data-code="${r.code ?? ''}">?</button>
+	      <span class="font-monospace">${updated.code ?? ''}</span>`;
     tds[2].textContent = updated.job;
     tds[3].textContent = updated.level;
     tds[4].textContent = updated.attack;
