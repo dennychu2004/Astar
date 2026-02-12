@@ -973,16 +973,17 @@ function renderTable(data)
     $btn.data('level', updated.level);
     $btn.data('attack',updated.attack);
     $btn.data('camp',  updated.camp);
-    });
 	
-    // 載入小夥伴清單
+	//20260212 KuanTa+ 重新載入更名Log
     const target = resolveSheetTarget(DEFAULT_SHEET_URL);
     if (!target.sheetId) 
 	{
       $('#msg').text('無法解析指定的 Google Sheet 連結或 sheetId');
       return;
     }
-	loadRenameLog(target.sheetId); //20260212 KuanTa+ 重新載入更名Log
+	loadRenameLog(target.sheetId); 
+    });
+	
   });
 }
 
