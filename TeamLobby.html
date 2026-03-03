@@ -8,7 +8,7 @@
   <!-- Bootstrap 5 -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
   <!-- jQuery -->
-  <script type="text/javascript" src="https://gc.kes.v2.scr.kaspersky-labs.com/7EA5E9BB-55E1-4C31-9C21-4943DDFED2E4/main.js?attr=6XDg0z0wE-ksoWZRR7RjMXFRL9k0j-wGUe8yIo_t1c1E2KrfblIvHpsVrIy2lhzLJ-Hy0pwCwnKyhr3Lp6I9Wqrl6HMsS39MsPNnZUP7bU7B_OFaaPAOAxHmeHltrm5E" charset="UTF-8"></script><script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
   <!-- Bootstrap JS -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
   <!-- PapaParse -->
@@ -17,7 +17,16 @@
   <style>
     body { overflow-y: scroll; margin: 0; padding: 0; }
     .title{font-weight:bold; font-size:1.0rem;}
-    .reset-content { display: table-cell; line-height: 1.5; font-size: 1rem; padding: 0.5; border: none; }
+    .reset-content 
+	{ 
+	  display: table-cell; 
+	  line-height: 1.5; 
+	  font-size: 1rem; 
+	  padding: 0.5; 
+	  border: none; 
+	  
+	  width: 100vw;       /* 嘗試填滿視窗寬度 */
+	}
     [data-bs-theme="dark"] .card{ border-color: rgba(255,255,255,.12); }
     .badge-guild{ color:#fff; font-weight:800; border:0; background:#198754; }
 
