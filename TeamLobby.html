@@ -17,8 +17,13 @@
   <style>
     body { overflow-y: scroll; margin: 0; padding: 0; }
     .title{font-weight:bold; font-size:1.0rem;}
-    .reset-content { display: table-cell; line-height: 1.5; font-size: 1rem; padding: 0.5; border: none; }
-    [data-bs-theme="dark"] .card{ border-color: rgba(255,255,255,.12); }
+    .reset-content 
+	{  
+	  line-height: 1.5; 
+	  font-size: 1rem; 
+	  padding: 0.5; 
+	  border: none; }
+    [data-bs-theme="dark"] 
     .badge-guild{ color:#fff; font-weight:800; border:0; background:#198754; }
 
     /* ===== Tabs（公會成員） ===== */
@@ -274,7 +279,7 @@
     </div>
 
     <div class="card shadow-sm mb-3">
-      <div class="card-body">
+      <div class="card-body ">
         <div class="text-muted">
           ✅ ASTAR / MTEZ 公會成員分頁顯示。
         </div>
@@ -304,27 +309,27 @@
           </div>
         </div>
 
-        <div class="table-responsive">
-          <table class="table table-striped table-hover align-middle reset-content">
-            <thead class="table-secondary">
-              <tr>
-                <th style="width: 18%;">角色名稱</th>
-                <th style="width: 12%;">角色代碼</th>
-                <th style="width: 18%;">角色職業</th>
-                <th style="width: 10%;">角色等級</th>
-                <th style="width: 10%;">角色乾表</th>
-                <th style="width: 12%;">公會</th>
-                <th style="width: 20%;">備註</th>
-                <th style="width: 8%;">修改</th>
-              </tr>
-            </thead>
-            <tbody id="memberTableBody">
-              <tr><td colspan="8" class="text-center text-muted">尚未讀取資料</td></tr>
-            </tbody>
-          </table>
-        </div>
-
       </div>
+
+	  <div class="table-responsive">
+	    <table class="table table-striped table-hover align-middle reset-content" style="width: 100%;">
+	  	<thead class="table-secondary">
+	  	  <tr>
+	  		<th style="width: 18%;">角色名稱</th>
+	  		<th style="width: 12%;">角色代碼</th>
+	  		<th style="width: 18%;">角色職業</th>
+	  		<th style="width: 10%;">角色等級</th>
+	  		<th style="width: 10%;">角色乾表</th>
+	  		<th style="width: 12%;">公會</th>
+	  		<th style="width: 20%;">備註</th>
+	  		<th style="width: 8%;">修改</th>
+	  	  </tr>
+	  	</thead>
+	  	<tbody id="memberTableBody">
+	  	  <tr><td colspan="8" class="text-center text-muted">尚未讀取資料</td></tr>
+	  	</tbody>
+	    </table>
+	  </div>
     </div>
   </div>
 
